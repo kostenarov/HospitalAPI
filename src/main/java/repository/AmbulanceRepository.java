@@ -1,2 +1,9 @@
-package repository;public interface AmbulanceRepository {
+package repository;
+
+import entity.Ambulance;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AmbulanceRepository extends JpaRepository<Ambulance, Long> {
 }
