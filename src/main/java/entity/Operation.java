@@ -16,10 +16,10 @@ public class Operation {
     @ManyToOne
     private Hospital hospital;
 
-    @OneToOne
+    @OneToOne(mappedBy = "Patient")
     private Patient patient;
 
-    @OneToOne
+    @OneToOne(mappedBy = "Doctor")
     private Doctor doctor;
 
     private Date operationDate;

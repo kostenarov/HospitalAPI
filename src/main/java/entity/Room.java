@@ -12,7 +12,7 @@ public class Room {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
+    @OneToOne(mappedBy = "Hospital")
     private Hospital hospital;
 
     /*
