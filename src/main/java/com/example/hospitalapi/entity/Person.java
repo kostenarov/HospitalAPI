@@ -1,4 +1,4 @@
-package entity;
+package com.example.hospitalapi.entity;
 
 public abstract class Person {
     int age;

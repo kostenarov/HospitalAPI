@@ -1,9 +1,6 @@
-package entity;
+package com.example.hospitalapi.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,6 +16,9 @@ public class Patient extends Person{
 
     @OneToOne
     private Bed bed;
+
+    @OneToOne
+    private Operation operation;
 
     private Date admissionDate;
 }

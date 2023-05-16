@@ -1,11 +1,10 @@
-package entity;
+package com.example.hospitalapi.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -15,6 +14,9 @@ public class Doctor extends Person{
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Hospital hospital;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<Operation> operations;
 }

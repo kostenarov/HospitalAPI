@@ -1,6 +1,6 @@
-package repository;
+package com.example.hospitalapi.repository;
 
-import entity.Room;
+import com.example.hospitalapi.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

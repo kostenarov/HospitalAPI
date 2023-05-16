@@ -1,4 +1,4 @@
-package entity;
+package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,8 +11,9 @@ public class Bed {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
 
-    @OneToOne(mappedBy = "Patient")
+    @OneToOne
     private Patient patient;
 }

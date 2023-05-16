@@ -1,9 +1,9 @@
-package entity;
+package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -12,10 +12,10 @@ public class Room {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(mappedBy = "Hospital")
+    @ManyToOne
     private Hospital hospital;
 
-    /*
     @OneToMany
-    private ArrayList<Bed> beds;*/
+    @JoinColumn(name = "bed_id")
+    private List<Bed> beds;
 }
