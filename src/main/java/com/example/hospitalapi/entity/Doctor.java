@@ -2,17 +2,18 @@ package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class Doctor extends Person{
+public class Doctor{
     @Id
     @GeneratedValue
     private Long id;
+
+    int age;
+    String FirstName, LastName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Hospital hospital;

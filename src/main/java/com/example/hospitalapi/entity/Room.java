@@ -16,6 +16,5 @@ public class Room {
     private Hospital hospital;
 
     @OneToMany
-    @JoinColumn(name = "bed_id")
     private List<Bed> beds;
 }

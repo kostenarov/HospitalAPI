@@ -11,7 +11,6 @@ public class Bed {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
     private Room room;
 
     @OneToOne
