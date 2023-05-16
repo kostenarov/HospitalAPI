@@ -1,4 +1,4 @@
-![image](https://github.com/kostenarov/HospitalAPI/assets/61360809/1808dcc3-4bb7-487e-b361-426256c3e9da)
+![image](https://github.com/kostenarov/HospitalAPI/assets/61360809/2574a0d2-c9b9-4600-a1ae-5607c51f136c)
 Hospital REST API.
 Hospital: Has field for id, Name and City.
 Room: Has fields for id and the id of the hospital it's in.
