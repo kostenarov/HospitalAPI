@@ -7,16 +7,10 @@ import java.util.Date;
 
 @Entity
 @Data
-public class Patient{
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Patient extends Person{
 
     @OneToOne
     private Bed bed;
-
-    int age;
-    String FirstName, LastName;
 
     @OneToOne
     private Operation operation;

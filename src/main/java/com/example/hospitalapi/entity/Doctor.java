@@ -7,13 +7,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Doctor{
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    int age;
-    String FirstName, LastName;
+public class Doctor extends Person{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Hospital hospital;
