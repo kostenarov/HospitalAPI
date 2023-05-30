@@ -28,11 +28,11 @@ public class AmbulanceServiceImpl implements AmbulanceService {
     }
 
     @Override
-    public Ambulance save(AmbulanceResource ambulanceResource) {
+    public AmbulanceResource save(AmbulanceResource ambulanceResource) {
         Ambulance ambulance = AMBULANCE_MAPPER.fromAmbulanceResource(ambulanceResource);
         HospitalResource hospital = hospitalService.findById(ambulanceResource.getHospitalId());
         ambulance.setHospital(HOSPITAL_MAPPER.fromHospitalResource(hospital));
-        return ambulanceRepository.save(ambulance);
+        return AMBULANCE_MAPPER.toAmbulanceResource(ambulanceRepository.save(ambulance));
     }
 
     @Override

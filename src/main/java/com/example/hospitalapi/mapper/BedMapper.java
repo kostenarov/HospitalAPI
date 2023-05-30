@@ -14,14 +14,14 @@ public interface BedMapper {
     public BedMapper BED_MAPPER = Mappers.getMapper(BedMapper.class);
 
     @Mapping(source = "room.id", target = "roomId")
+    @Mapping(source = "patient.id", target = "patientId")
     BedResource toBedResource(Bed bed);
 
     @Mapping(source = "roomId", target = "room.id")
+    @Mapping(source = "patientId", target = "patient.id")
     Bed fromBedResource(BedResource bedResource);
 
-    @Mapping(source = "bed.id", target = "bedId")
     List<BedResource> toBedResources(List<Bed> bedList);
 
-    @Mapping(source = "bedId", target = "bed.id")
     List<Bed> fromBedResources(List<BedResource> bedResourceList);
 }

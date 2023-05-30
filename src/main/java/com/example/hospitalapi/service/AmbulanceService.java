@@ -8,7 +8,7 @@ import java.util.List;
 public interface AmbulanceService {
     List<AmbulanceResource> findAll();
 
-    Ambulance save(AmbulanceResource ambulanceResource);
+    AmbulanceResource save(AmbulanceResource ambulanceResource);
 
     AmbulanceResource findById(Long id);
 

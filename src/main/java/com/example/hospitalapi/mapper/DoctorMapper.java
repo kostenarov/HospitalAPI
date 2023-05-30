@@ -18,9 +18,7 @@ public interface DoctorMapper {
     @Mapping(source = "hospitalId", target = "hospital.id")
     Doctor fromDoctorResource(DoctorResource doctorResource);
 
-    @Mapping(source = "hospital.id", target = "hospitalId")
     List<DoctorResource> toDoctorResources(List<Doctor> doctor);
 
-    @Mapping(source = "hospitalId", target = "hospital.id")
     List<Doctor> fromDoctorResources(List<DoctorResource> doctorResource);
 }

@@ -13,14 +13,16 @@ public interface OperationMapper {
     public OperationMapper OPERATION_MAPPER = Mappers.getMapper(OperationMapper.class);
 
     @Mapping(source = "operation.id", target = "operationId")
+    @Mapping(source = "patient.id", target = "patientId")
+    @Mapping(source = "doctor.id", target = "doctorId")
     OperationResource toOperationResource(Operation operation);
 
     @Mapping(source = "operationId", target = "operation.id")
+    @Mapping(source = "patientId", target = "patient.id")
+    @Mapping(source = "doctorId", target = "doctor.id")
     Operation fromOperationResource(OperationResource operationResource);
 
-    @Mapping(source = "operation.id", target = "operationId")
     List<OperationResource> toOperationResources(List<Operation> operation);
 
-    @Mapping(source = "operationId", target = "operation.id")
     List<Operation> fromOperationResources(List<OperationResource> operationResource);
 }

@@ -12,15 +12,15 @@ import java.util.List;
 public interface PatientMapper {
     public PatientMapper PATIENT_MAPPER = Mappers.getMapper(PatientMapper.class);
 
-    @Mapping(source = "patient.id", target = "patientId")
+    @Mapping(source = "bed.id", target = "bedId")
+    @Mapping(source = "operation.id", target = "operationId")
     PatientResource toPatientResource(Patient patient);
 
-    @Mapping(source = "patientId", target = "patient.id")
+    @Mapping(source = "bedId", target = "bed.id")
+    @Mapping(source = "operationId", target = "operation.id")
     Patient fromPatientResource(PatientResource patientResource);
 
-    @Mapping(source = "patient.id", target = "patientId")
     List<PatientResource> toPatientResources(List<Patient> all);
 
-    @Mapping(source = "patientId", target = "patient.id")
     List<Patient> fromPatientResources(List<PatientResource> all);
 }

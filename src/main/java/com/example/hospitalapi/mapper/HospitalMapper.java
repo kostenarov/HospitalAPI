@@ -12,15 +12,11 @@ import java.util.List;
 public interface HospitalMapper {
     public HospitalMapper HOSPITAL_MAPPER = Mappers.getMapper(HospitalMapper.class);
 
-    @Mapping(source = "hospital.id", target = "hospitalId")
     HospitalResource toHospitalResource(Hospital hospital);
 
-    @Mapping(source = "hospitalId", target = "hospital.id")
     Hospital fromHospitalResource(HospitalResource hospitalResource);
 
-    @Mapping(source = "hospital.id", target = "hospitalId")
     List<HospitalResource> toHospitalResources(List<Hospital> hospital);
 
-    @Mapping(source = "hospitalId", target = "hospital.id")
     List<Hospital> fromHospitalResources(List<HospitalResource> hospitalResource);
 }

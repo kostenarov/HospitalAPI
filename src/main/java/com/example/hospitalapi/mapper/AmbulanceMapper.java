@@ -12,12 +12,11 @@ import java.util.List;
 public interface AmbulanceMapper {
     public AmbulanceMapper AMBULANCE_MAPPER = Mappers.getMapper(AmbulanceMapper.class);
 
-    @Mapping(source = "ambulance.id", target = "id")
+    @Mapping(source = "hospital.id", target = "hospitalId")
     AmbulanceResource toAmbulanceResource(Ambulance ambulance);
 
-    @Mapping(source = "id", target = "ambulance.id")
+    @Mapping(source = "hospitalId", target = "hospital.id")
     Ambulance fromAmbulanceResource(AmbulanceResource ambulanceResource);
 
-    @Mapping(source = "ambulance.id", target = "id")
     List<AmbulanceResource> toAmbulanceResources(List<Ambulance> ambulanceList);
 }
