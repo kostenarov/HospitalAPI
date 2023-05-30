@@ -8,17 +8,16 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = HospitalMapper.class)
+@Mapper
 public interface AmbulanceMapper {
     public AmbulanceMapper AMBULANCE_MAPPER = Mappers.getMapper(AmbulanceMapper.class);
 
-    @Mapping(source = "hospital.id", target = "hospitalId")
+    @Mapping(source = "ambulance.id", target = "id")
     AmbulanceResource toAmbulanceResource(Ambulance ambulance);
 
-    @Mapping(source = "hospitalId", target = "hospital.id")
+    @Mapping(source = "id", target = "ambulance.id")
     Ambulance fromAmbulanceResource(AmbulanceResource ambulanceResource);
 
-
-    @Mapping(source = "ambulance.id", target = "ambulanceId")
-    List<AmbulanceResource> toResources(List<Ambulance> ambulanceList);
+    @Mapping(source = "ambulance.id", target = "id")
+    List<AmbulanceResource> toAmbulanceResources(List<Ambulance> ambulanceList);
 }

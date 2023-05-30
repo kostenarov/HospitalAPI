@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = DoctorMapper.class)
+@Mapper
 public interface OperationMapper {
     public OperationMapper OPERATION_MAPPER = Mappers.getMapper(OperationMapper.class);
 

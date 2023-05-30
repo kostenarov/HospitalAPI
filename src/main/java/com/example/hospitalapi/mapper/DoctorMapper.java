@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(uses = HospitalMapper.class)
+@Mapper(uses = OperationMapper.class)
 public interface DoctorMapper {
     public DoctorMapper DOCTOR_MAPPER = Mappers.getMapper(DoctorMapper.class);
 

@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class AmbulanceResource {
     private Long id;
-    private Long hospitalId;
+    private Long HospitalId;
 }
