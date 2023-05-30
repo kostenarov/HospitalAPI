@@ -14,6 +14,4 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PatientController {
     private final PatientService patientService;
-    private final BedService bedService;
-    private final OperationService operationService;
 }

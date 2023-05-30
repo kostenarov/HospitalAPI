@@ -1,38 +1,50 @@
 package com.example.hospitalapi.service.impl;
 
+import com.example.hospitalapi.controller.resources.AmbulanceResource;
 import com.example.hospitalapi.entity.Ambulance;
+import com.example.hospitalapi.repository.AmbulanceRepository;
 import com.example.hospitalapi.service.AmbulanceService;
+import com.example.hospitalapi.service.HospitalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Stream;
+
+import static com.example.hospitalapi.mapper.AmbulanceMapper.AMBULANCE_MAPPER;
 
 @Service
 @RequiredArgsConstructor
 public class AmbulanceServiceImpl implements AmbulanceService {
-    private final AmbulanceService AmbulanceService;
+    private final AmbulanceRepository ambulanceRepository;
+    private final HospitalService hospitalService;
+
     @Override
-    public List<Ambulance> findAll() {
-        return AmbulanceService.findAll();
+    public List<AmbulanceResource> findAll() {
+        return AMBULANCE_MAPPER.toResources(ambulanceRepository.findAll());
     }
 
     @Override
-    public Ambulance save(Ambulance ambulance) {
-        return AmbulanceService.save(ambulance);
+    public Ambulance save(AmbulanceResource ambulanceResource) {
+        Ambulance ambulance = AMBULANCE_MAPPER.fromAmbulanceResource(ambulanceResource);
+        ambulance.setHospital(hospitalService.findById(ambulanceResource.getHospitalId()));
+        return ambulanceRepository.save(ambulance);
     }
 
     @Override
-    public Ambulance findById(Long id) {
-        return AmbulanceService.findById(id);
+    public AmbulanceResource findById(Long id) {
+        return AMBULANCE_MAPPER.toAmbulanceResource(ambulanceRepository.findById(id).get());
     }
 
     @Override
     public void deleteById(Long id) {
-        AmbulanceService.deleteById(id);
+        ambulanceRepository.deleteById(id);
     }
 
     @Override
-    public List<Ambulance> findByHospitalId(Long id) {
-        return AmbulanceService.findByHospitalId(id);
+    public List<AmbulanceResource> findByHospitalId(Long id) {
+        return AMBULANCE_MAPPER.toResources(ambulanceRepository.findAll().stream()
+                .filter(ambulance -> ambulance.getHospital().getId().equals(id))
+                .toList());
     }
 }

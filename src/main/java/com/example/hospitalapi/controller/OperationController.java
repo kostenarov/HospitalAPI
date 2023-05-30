@@ -12,6 +12,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OperationController {
     private final OperationService operationService;
-    private final PatientService patientService;
-    private final DoctorService doctorService;
 }

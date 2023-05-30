@@ -3,6 +3,6 @@ package com.example.hospitalapi.controller.resources;
 import lombok.Data;
 
 @Data
-public class PatientRecourse {
+public class PatientResource {
 
 }
