@@ -1,7 +1,6 @@
 package com.example.hospitalapi.service;
 
 import com.example.hospitalapi.controller.resources.OperationResource;
-import com.example.hospitalapi.entity.Operation;
 
 import java.sql.Date;
 import java.util.List;

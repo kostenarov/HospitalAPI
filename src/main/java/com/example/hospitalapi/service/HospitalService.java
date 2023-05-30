@@ -1,7 +1,6 @@
 package com.example.hospitalapi.service;
 
 import com.example.hospitalapi.controller.resources.HospitalResource;
-import com.example.hospitalapi.entity.Hospital;
 
 import java.util.List;
 

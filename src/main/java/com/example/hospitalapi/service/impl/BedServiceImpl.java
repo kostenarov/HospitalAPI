@@ -24,8 +24,8 @@ public class BedServiceImpl implements BedService {
     }
 
     @Override
-    public Bed save(BedResource bedResource) {
-        return bedRepository.save(BED_MAPPER.fromBedResource(bedResource));
+    public BedResource save(BedResource bedResource) {
+        return BED_MAPPER.toBedResource(bedRepository.save(BED_MAPPER.fromBedResource(bedResource)));
     }
 
     @Override
