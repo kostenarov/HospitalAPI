@@ -12,11 +12,15 @@ import java.util.List;
 public interface RoomMapper {
     public RoomMapper ROOM_MAPPER = Mappers.getMapper(RoomMapper.class);
 
+    @Mapping(source = "room.id", target = "roomId")
     RoomResource toRoomResource(Room room);
 
+    @Mapping(source = "roomId", target = "room.id")
     Room fromRoomResource(RoomResource roomResource);
 
+    @Mapping(source = "room.id", target = "roomId")
     List<RoomResource> toRoomResources(List<Room> roomList);
 
+    @Mapping(source = "roomId", target = "room.id")
     List<Room> fromRoomResources(List<RoomResource> roomResourceList);
 }
