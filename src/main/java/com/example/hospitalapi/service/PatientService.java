@@ -1,23 +1,30 @@
 package com.example.hospitalapi.service;
 
+import com.example.hospitalapi.controller.resources.OperationResource;
+import com.example.hospitalapi.controller.resources.PatientResource;
+import com.example.hospitalapi.entity.Operation;
 import com.example.hospitalapi.entity.Patient;
 
 import java.util.List;
 
 public interface PatientService {
-    List<Patient> findAll();
+    List<PatientResource> findAll();
 
-    Patient save(Patient patient);
+    PatientResource save(PatientResource patient);
 
-    Patient findById(Long id);
+    PatientResource findById(Long id);
 
     void deleteById(Long id);
 
-    List<Patient> findByHospitalId(Long id);
+    List<PatientResource> findByHospitalId(Long id);
 
-    List<Patient> findByRoomId(Long id);
+    List<PatientResource> findByRoomId(Long id);
 
-    List<Patient> findByBedId(Long id);
+    PatientResource findByBedId(Long id);
 
-    List<Patient> findByOperationId(Long id);
+    PatientResource findByOperationId(Long id);
+
+    PatientResource update(PatientResource patientResource);
+
+    void addOperation(Long patientId, Operation operation);
 }

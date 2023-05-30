@@ -1,38 +1,52 @@
 package com.example.hospitalapi.service.impl;
 
+import com.example.hospitalapi.controller.resources.HospitalResource;
+import com.example.hospitalapi.controller.resources.RoomResource;
 import com.example.hospitalapi.entity.Room;
+import com.example.hospitalapi.repository.RoomRepository;
+import com.example.hospitalapi.service.HospitalService;
 import com.example.hospitalapi.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.example.hospitalapi.mapper.HospitalMapper.HOSPITAL_MAPPER;
+import static com.example.hospitalapi.mapper.RoomMapper.ROOM_MAPPER;
+
 @Service
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
-    private final RoomService RoomService;
+    private final RoomRepository RoomRepository;
+    private final HospitalService hospitalService;
+
     @Override
-    public List<Room> findAll() {
-        return RoomService.findAll();
+    public List<RoomResource> findAll() {
+        return ROOM_MAPPER.toRoomResources(RoomRepository.findAll());
     }
 
     @Override
-    public Room save(Room room) {
-        return RoomService.save(room);
+    public RoomResource save(RoomResource roomResource) {
+        Room room = ROOM_MAPPER.fromRoomResource(roomResource);
+        HospitalResource hospital = hospitalService.findById(roomResource.getHospitalId());
+        room.setHospital(HOSPITAL_MAPPER.fromHospitalResource(hospital));
+        return ROOM_MAPPER.toRoomResource(RoomRepository.save(room));
     }
 
     @Override
-    public Room findById(Long id) {
-        return RoomService.findById(id);
+    public RoomResource findById(Long id) {
+        return ROOM_MAPPER.toRoomResource(RoomRepository.findById(id).get());
     }
 
     @Override
     public void deleteById(Long id) {
-        RoomService.deleteById(id);
+        RoomRepository.deleteById(id);
     }
 
     @Override
-    public List<Room> findByHospitalId(Long id) {
-        return RoomService.findByHospitalId(id);
+    public List<RoomResource> findByHospitalId(Long id) {
+        return ROOM_MAPPER.toRoomResources(RoomRepository.findAll().stream()
+                .filter(room -> room.getHospital().getId().equals(id))
+                .toList());
     }
 }

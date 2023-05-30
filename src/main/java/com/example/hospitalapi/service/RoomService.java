@@ -1,17 +1,18 @@
 package com.example.hospitalapi.service;
 
+import com.example.hospitalapi.controller.resources.RoomResource;
 import com.example.hospitalapi.entity.Room;
 
 import java.util.List;
 
 public interface RoomService {
-    List<Room> findAll();
+    List<RoomResource> findAll();
 
-    Room save(Room room);
+    RoomResource save(RoomResource roomResource);
 
-    Room findById(Long id);
+    RoomResource findById(Long id);
 
     void deleteById(Long id);
 
-    List<Room> findByHospitalId(Long id);
+    List<RoomResource> findByHospitalId(Long id);
 }

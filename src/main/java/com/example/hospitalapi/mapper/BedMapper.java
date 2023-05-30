@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = RoomMapper.class)
 public interface BedMapper {
 
     public BedMapper BED_MAPPER = Mappers.getMapper(BedMapper.class);
@@ -19,12 +19,9 @@ public interface BedMapper {
     @Mapping(source = "roomId", target = "room.id")
     Bed fromBedResource(BedResource bedResource);
 
-    @Mapping(source = "patient.id", target = "patientId")
-    BedResource toBedResourceWithPatient(Bed bed);
-
-    @Mapping(source = "patientId", target = "patient.id")
-    Bed fromBedWithPatient(BedResource bedResource);
-
     @Mapping(source = "operation.id", target = "operationId")
-    List<BedResource> toResources(List<Bed> bedList);
+    List<BedResource> toBedResources(List<Bed> bedList);
+
+    @Mapping(source = "operationId", target = "operation.id")
+    List<Bed> fromBedResources(List<BedResource> bedResourceList);
 }

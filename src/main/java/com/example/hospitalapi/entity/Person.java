@@ -7,7 +7,11 @@ import lombok.Data;
 public abstract class Person {
     @Id
     @GeneratedValue
-    private Long id;
-    int age;
-    String FirstName, LastName;
+    protected Long id;
+    protected int age;
+    protected String FirstName, LastName;
+
+    public Long getId() {
+        return id;
+    }
 }

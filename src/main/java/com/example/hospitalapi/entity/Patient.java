@@ -10,7 +10,7 @@ import java.util.Optional;
 @Entity
 @Data
 @Component
-public class Patient extends Person{
+public class Patient extends Person {
 
     @OneToOne
     private Bed bed;
@@ -19,4 +19,5 @@ public class Patient extends Person{
     private Operation operation;
 
     private Date admissionDate;
+
 }

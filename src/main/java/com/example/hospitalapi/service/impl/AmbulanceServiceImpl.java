@@ -1,7 +1,9 @@
 package com.example.hospitalapi.service.impl;
 
 import com.example.hospitalapi.controller.resources.AmbulanceResource;
+import com.example.hospitalapi.controller.resources.HospitalResource;
 import com.example.hospitalapi.entity.Ambulance;
+import com.example.hospitalapi.entity.Hospital;
 import com.example.hospitalapi.repository.AmbulanceRepository;
 import com.example.hospitalapi.service.AmbulanceService;
 import com.example.hospitalapi.service.HospitalService;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.example.hospitalapi.mapper.AmbulanceMapper.AMBULANCE_MAPPER;
+import static com.example.hospitalapi.mapper.HospitalMapper.HOSPITAL_MAPPER;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +30,8 @@ public class AmbulanceServiceImpl implements AmbulanceService {
     @Override
     public Ambulance save(AmbulanceResource ambulanceResource) {
         Ambulance ambulance = AMBULANCE_MAPPER.fromAmbulanceResource(ambulanceResource);
-        ambulance.setHospital(hospitalService.findById(ambulanceResource.getHospitalId()));
+        HospitalResource hospital = hospitalService.findById(ambulanceResource.getHospitalId());
+        ambulance.setHospital(HOSPITAL_MAPPER.fromHospitalResource(hospital));
         return ambulanceRepository.save(ambulance);
     }
 

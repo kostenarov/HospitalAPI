@@ -6,13 +6,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+import java.util.List;
+
+@Mapper(uses = DoctorMapper.class)
 public interface OperationMapper {
     public OperationMapper OPERATION_MAPPER = Mappers.getMapper(OperationMapper.class);
 
     @Mapping(source = "operation.id", target = "operationId")
-    OperationResource toResource(Operation operation);
+    OperationResource toOperationResource(Operation operation);
 
     @Mapping(source = "operationId", target = "operation.id")
-    Operation toEntity(OperationResource operationResource);
+    Operation fromOperationResource(OperationResource operationResource);
+
+    @Mapping(source = "operation.id", target = "operationId")
+    List<OperationResource> toOperationResources(List<Operation> operation);
+
+    @Mapping(source = "operationId", target = "operation.id")
+    List<Operation> fromOperationResources(List<OperationResource> operationResource);
 }

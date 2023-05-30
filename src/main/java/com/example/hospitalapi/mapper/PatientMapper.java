@@ -6,13 +6,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+import java.util.List;
+
+@Mapper(uses = BedMapper.class)
 public interface PatientMapper {
     public PatientMapper PATIENT_MAPPER = Mappers.getMapper(PatientMapper.class);
 
     @Mapping(source = "patient.id", target = "patientId")
-    PatientResource toResource(Patient patient);
+    PatientResource toPatientResource(Patient patient);
 
     @Mapping(source = "patientId", target = "patient.id")
-    Patient toEntity(PatientResource patientResource);
+    Patient fromPatientResource(PatientResource patientResource);
+
+    @Mapping(source = "patient.id", target = "patientId")
+    List<PatientResource> toPatientResources(List<Patient> all);
+
+    @Mapping(source = "patientId", target = "patient.id")
+    List<Patient> fromPatientResources(List<PatientResource> all);
 }

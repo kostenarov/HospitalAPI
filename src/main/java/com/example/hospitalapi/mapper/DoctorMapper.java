@@ -6,13 +6,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+import java.util.List;
+
+@Mapper(uses = HospitalMapper.class)
 public interface DoctorMapper {
     public DoctorMapper DOCTOR_MAPPER = Mappers.getMapper(DoctorMapper.class);
 
     @Mapping(source = "hospital.id", target = "hospitalId")
-    DoctorResource toResource(Doctor doctor);
+    DoctorResource toDoctorResource(Doctor doctor);
 
     @Mapping(source = "hospitalId", target = "hospital.id")
-    Doctor toEntity(DoctorResource doctorResource);
+    Doctor fromDoctorResource(DoctorResource doctorResource);
+
+    @Mapping(source = "hospital.id", target = "hospitalId")
+    List<DoctorResource> toDoctorResources(List<Doctor> doctor);
+
+    @Mapping(source = "hospitalId", target = "hospital.id")
+    List<Doctor> fromDoctorResources(List<DoctorResource> doctorResource);
 }

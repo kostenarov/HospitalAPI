@@ -18,18 +18,14 @@ import static com.example.hospitalapi.mapper.BedMapper.BED_MAPPER;
 public class BedServiceImpl implements BedService {
     private final BedRepository bedRepository;
 
-    private final PatientService patientService;
-
-    private final RoomService roomService;
-
     @Override
     public List<BedResource> findAll() {
-        return BED_MAPPER.toResources(bedRepository.findAll());
+        return BED_MAPPER.toBedResources(bedRepository.findAll());
     }
 
     @Override
-    public Bed save(Bed bed) {
-        return bedRepository.save(bed);
+    public Bed save(BedResource bedResource) {
+        return bedRepository.save(BED_MAPPER.fromBedResource(bedResource));
     }
 
     @Override
@@ -44,9 +40,16 @@ public class BedServiceImpl implements BedService {
 
     @Override
     public List<BedResource> findByRoomId(Long id) {
-        return BED_MAPPER.toResources(bedRepository.findAll().stream()
+        return BED_MAPPER.toBedResources(bedRepository.findAll().stream()
                 .filter(bed -> bed.getRoom().getId().equals(id))
                 .toList());
+    }
+
+    @Override
+    public BedResource findByPatientId(Long id) {
+        return BED_MAPPER.toBedResource(bedRepository.findAll().stream()
+                .filter(bed -> bed.getPatient().getId().equals(id))
+                .toList().get(0));
     }
 
     /*@Override
@@ -58,7 +61,7 @@ public class BedServiceImpl implements BedService {
 
     @Override
     public List<BedResource> findByHospitalId(Long id) {
-        return BED_MAPPER.toResources(bedRepository.findAll().stream()
+        return BED_MAPPER.toBedResources(bedRepository.findAll().stream()
                 .filter(bed -> bed.getRoom().getHospital().getId().equals(id))
                 .toList());
     }

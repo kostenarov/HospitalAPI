@@ -1,43 +1,57 @@
 package com.example.hospitalapi.service.impl;
 
+import com.example.hospitalapi.controller.resources.DoctorResource;
+import com.example.hospitalapi.controller.resources.OperationResource;
 import com.example.hospitalapi.entity.Doctor;
+import com.example.hospitalapi.entity.Operation;
+import com.example.hospitalapi.repository.DoctorRepository;
 import com.example.hospitalapi.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.example.hospitalapi.mapper.DoctorMapper.DOCTOR_MAPPER;
+
 @Service
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
-    private final DoctorService DoctorService;
+    private final DoctorRepository DoctorRepository;
     @Override
-    public List<Doctor> findAll() {
-        return DoctorService.findAll();
+    public List<DoctorResource> findAll() {
+        return DOCTOR_MAPPER.toDoctorResources(DoctorRepository.findAll());
     }
 
     @Override
-    public Doctor save(Doctor doctor) {
-        return DoctorService.save(doctor);
+    public DoctorResource save(DoctorResource doctor) {
+        Doctor doctor1 = DOCTOR_MAPPER.fromDoctorResource(doctor);
+        return DOCTOR_MAPPER.toDoctorResource(DoctorRepository.save(doctor1));
     }
 
     @Override
-    public Doctor findById(Long id) {
-        return DoctorService.findById(id);
+    public DoctorResource findById(Long id) {
+        return DOCTOR_MAPPER.toDoctorResource(DoctorRepository.findById(id).get());
     }
 
     @Override
     public void deleteById(Long id) {
-        DoctorService.deleteById(id);
+        DoctorRepository.deleteById(id);
     }
 
     @Override
-    public List<Doctor> findByHospitalId(Long id) {
-        return DoctorService.findByHospitalId(id);
+    public List<DoctorResource> findByHospitalId(Long id) {
+        return findAll().stream().filter(doctorResource -> doctorResource.getHospitalId().equals(id)).toList();
     }
 
     @Override
-    public List<Doctor> findByOperationId(Long id) {
-        return DoctorService.findByOperationId(id);
+    public DoctorResource findByOperationId(Long id) {
+        return findAll().stream().map(doctorResource -> {
+            for(OperationResource temp : doctorResource.getOperations()){
+                if(temp.getId().equals(id)){
+                    return doctorResource;
+                }
+            }
+            return null;
+        }).toList().get(0);
     }
 }

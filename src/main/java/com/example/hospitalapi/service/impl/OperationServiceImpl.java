@@ -1,6 +1,8 @@
 package com.example.hospitalapi.service.impl;
 
+import com.example.hospitalapi.controller.resources.OperationResource;
 import com.example.hospitalapi.entity.Operation;
+import com.example.hospitalapi.repository.OperationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.hospitalapi.service.OperationService;
@@ -8,48 +10,51 @@ import com.example.hospitalapi.service.OperationService;
 import java.sql.Date;
 import java.util.List;
 
+import static com.example.hospitalapi.mapper.OperationMapper.OPERATION_MAPPER;
+
 @Service
 @RequiredArgsConstructor
 public class OperationServiceImpl implements OperationService{
-    private final OperationService OperationService;
+    private final OperationRepository operationRepository;
 
     @Override
-    public List<Operation> findAll() {
-        return OperationService.findAll();
+    public List<OperationResource> findAll() {
+        return OPERATION_MAPPER.toOperationResources(operationRepository.findAll());
     }
 
     @Override
-    public Operation save(Operation operation) {
-        return OperationService.save(operation);
+    public OperationResource save(OperationResource operationResource) {
+        Operation operation = OPERATION_MAPPER.fromOperationResource(operationResource);
+        return OPERATION_MAPPER.toOperationResource(operationRepository.save(operation));
     }
 
     @Override
-    public Operation findById(Long id) {
-        return OperationService.findById(id);
+    public OperationResource findById(Long id) {
+        return OPERATION_MAPPER.toOperationResource(operationRepository.findById(id).get());
     }
 
     @Override
     public void deleteById(Long id) {
-        OperationService.deleteById(id);
+        operationRepository.deleteById(id);
     }
 
     @Override
-    public List<Operation> findByHospitalId(Long id) {
-        return null;
+    public List<OperationResource> findByHospitalId(Long id) {
+        return findAll().stream().filter(operationResource -> operationResource.getHospitalId().equals(id)).toList();
     }
 
     @Override
-    public List<Operation> findByDoctorId(Long id) {
-        return null;
+    public List<OperationResource> findByDoctorId(Long id) {
+        return findAll().stream().filter(operationResource -> operationResource.getDoctorId().equals(id)).toList();
     }
 
     @Override
-    public Operation findByPatientId(Long id) {
-        return null;
+    public OperationResource findByPatientId(Long id) {
+        return findAll().stream().filter(operationResource -> operationResource.getPatientId().equals(id)).toList().get(0);
     }
 
     @Override
-    public List<Operation> findByDate(Date date) {
-        return null;
+    public List<OperationResource> findByDate(Date date) {
+        return findAll().stream().filter(operationResource -> operationResource.getDate().equals(date)).toList();
     }
 }

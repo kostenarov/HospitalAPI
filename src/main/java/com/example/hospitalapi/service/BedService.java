@@ -8,7 +8,7 @@ import java.util.List;
 public interface BedService {
     List<BedResource> findAll();
 
-    Bed save(Bed bed);
+    Bed save(BedResource bedResource);
 
     BedResource findById(Long id);
 
@@ -16,7 +16,7 @@ public interface BedService {
 
     List<BedResource> findByRoomId(Long id);
 
-    List<BedResource> findByPatientId(Long id);
+    BedResource findByPatientId(Long id);
 
     List<BedResource> findByHospitalId(Long id);
 }

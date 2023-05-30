@@ -1,15 +1,16 @@
 package com.example.hospitalapi.service;
 
+import com.example.hospitalapi.controller.resources.HospitalResource;
 import com.example.hospitalapi.entity.Hospital;
 
 import java.util.List;
 
 public interface HospitalService {
-    List<Hospital> findAll();
+    List<HospitalResource> findAll();
 
-    Hospital save(Hospital hospital);
+    HospitalResource save(HospitalResource hospital);
 
-    Hospital findById(Long id);
+    HospitalResource findById(Long id);
 
     void deleteById(Long id);
 }

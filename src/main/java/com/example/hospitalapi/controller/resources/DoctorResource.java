@@ -11,4 +11,8 @@ public class DoctorResource {
     private String surname;
     private Long hospitalId;
     private List<OperationResource> operations;
+
+    public List<OperationResource> getOperations() {
+        return operations;
+    }
 }
