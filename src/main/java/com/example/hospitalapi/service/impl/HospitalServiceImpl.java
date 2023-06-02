@@ -14,25 +14,28 @@ import static com.example.hospitalapi.mapper.HospitalMapper.HOSPITAL_MAPPER;
 @Service
 @RequiredArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
-    private final HospitalRepository HospitalRepository;
+    private final HospitalRepository hospitalRepository;
     @Override
     public List<HospitalResource> findAll() {
-        return HOSPITAL_MAPPER.toHospitalResources(HospitalRepository.findAll());
+        return HOSPITAL_MAPPER.toHospitalResources(hospitalRepository.findAll());
     }
 
     @Override
     public HospitalResource save(HospitalResource hospitalResource) {
         Hospital hospital = HOSPITAL_MAPPER.fromHospitalResource(hospitalResource);
-        return HOSPITAL_MAPPER.toHospitalResource(HospitalRepository.save(hospital));
+        if(hospitalRepository.existsByName(hospital.getName())) {
+            throw new RuntimeException("Hospital with name " + hospital.getName() + " already exists");
+        }
+        return HOSPITAL_MAPPER.toHospitalResource(hospitalRepository.save(hospital));
     }
 
     @Override
     public HospitalResource findById(Long id) {
-        return HOSPITAL_MAPPER.toHospitalResource(HospitalRepository.findById(id).get());
+        return HOSPITAL_MAPPER.toHospitalResource(hospitalRepository.findById(id).get());
     }
 
     @Override
     public void deleteById(Long id) {
-        HospitalRepository.deleteById(id);
+        hospitalRepository.deleteById(id);
     }
 }

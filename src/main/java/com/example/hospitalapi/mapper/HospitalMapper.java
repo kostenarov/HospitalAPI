@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(uses = {AmbulanceMapper.class, RoomMapper.class, BedMapper.class, DoctorMapper.class})
 public interface HospitalMapper {
-    public HospitalMapper HOSPITAL_MAPPER = Mappers.getMapper(HospitalMapper.class);
+    HospitalMapper HOSPITAL_MAPPER = Mappers.getMapper(HospitalMapper.class);
 
     HospitalResource toHospitalResource(Hospital hospital);
 

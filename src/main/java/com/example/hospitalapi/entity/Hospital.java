@@ -2,6 +2,7 @@ package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class Hospital {
     @GeneratedValue
     private Long id;
 
-    private String Name, City;
+    private String name, city;
 
     @OneToMany(mappedBy = "hospital")
     private List<Room> rooms;

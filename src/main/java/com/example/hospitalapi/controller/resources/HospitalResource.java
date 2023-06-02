@@ -7,8 +7,7 @@ import java.util.List;
 @Data
 public class HospitalResource {
     private Long id;
-    private String name;
-    private String city;
+    private String name, city;
     private List<RoomResource> rooms;
     private List<DoctorResource> doctors;
     private List<AmbulanceResource> ambulances;

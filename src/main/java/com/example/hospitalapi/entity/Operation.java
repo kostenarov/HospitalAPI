@@ -14,14 +14,12 @@ public class Operation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
     @OneToOne
     private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     private Date operationDate;

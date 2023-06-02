@@ -19,4 +19,6 @@ public interface AmbulanceMapper {
     Ambulance fromAmbulanceResource(AmbulanceResource ambulanceResource);
 
     List<AmbulanceResource> toAmbulanceResources(List<Ambulance> ambulanceList);
+
+    List<Ambulance> fromAmbulanceResources(List<AmbulanceResource> ambulanceResourceList);
 }
