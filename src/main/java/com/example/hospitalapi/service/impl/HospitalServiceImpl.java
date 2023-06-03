@@ -38,4 +38,13 @@ public class HospitalServiceImpl implements HospitalService {
     public void deleteById(Long id) {
         hospitalRepository.deleteById(id);
     }
+
+    @Override
+    public HospitalResource update(HospitalResource hospitalResource) {
+        Hospital hospital = HOSPITAL_MAPPER.fromHospitalResource(hospitalResource);
+        if(!hospitalRepository.existsById(hospital.getId())) {
+            throw new RuntimeException("Hospital with id " + hospital.getId() + " does not exist");
+        }
+        return HOSPITAL_MAPPER.toHospitalResource(hospitalRepository.save(hospital));
+    }
 }

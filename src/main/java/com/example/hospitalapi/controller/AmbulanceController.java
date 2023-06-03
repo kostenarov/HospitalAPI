@@ -31,7 +31,8 @@ public class AmbulanceController {
     }
 
     @PostMapping("/save")
-    public Long save(@RequestBody AmbulanceResource ambulanceResource) {
-        return ambulanceResource.getHospitalId();
+    public ResponseEntity<?> save(@RequestBody AmbulanceResource ambulanceResource) {
+        return ResponseEntity.created(UriComponentsBuilder.fromPath("/api/v1/ambulance/{id}")
+                .buildAndExpand(ambulanceService.save(ambulanceResource).getId()).toUri()).build();
     }
 }

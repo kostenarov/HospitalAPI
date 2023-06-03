@@ -4,10 +4,7 @@ import com.example.hospitalapi.controller.resources.HospitalResource;
 import com.example.hospitalapi.service.HospitalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -20,6 +17,28 @@ public class HospitalController {
     public ResponseEntity<?> save(@RequestBody HospitalResource hospitalResource) {
         return ResponseEntity.created(UriComponentsBuilder.fromPath("/api/v1/hospital/{id}")
                 .buildAndExpand(hospitalService.save(hospitalResource).getId()).toUri()).build();
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody HospitalResource hospitalResource) {
+        return ResponseEntity.created(UriComponentsBuilder.fromPath("/api/v1/hospital/{id}")
+                .buildAndExpand(hospitalService.update(hospitalResource).getId()).toUri()).build();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        hospitalService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(hospitalService.findById(id));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(hospitalService.findAll());
     }
 
 }

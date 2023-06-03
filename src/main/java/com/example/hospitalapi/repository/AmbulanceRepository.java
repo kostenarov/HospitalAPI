@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AmbulanceRepository extends JpaRepository<Ambulance, Long> {
+    public boolean existsById(Long id);
 }

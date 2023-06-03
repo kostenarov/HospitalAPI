@@ -5,6 +5,7 @@ import com.example.hospitalapi.controller.resources.HospitalResource;
 import com.example.hospitalapi.entity.Ambulance;
 import com.example.hospitalapi.entity.Hospital;
 import com.example.hospitalapi.repository.AmbulanceRepository;
+import com.example.hospitalapi.repository.HospitalRepository;
 import com.example.hospitalapi.service.AmbulanceService;
 import com.example.hospitalapi.service.HospitalService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import static com.example.hospitalapi.mapper.HospitalMapper.HOSPITAL_MAPPER;
 @RequiredArgsConstructor
 public class AmbulanceServiceImpl implements AmbulanceService {
     private final AmbulanceRepository ambulanceRepository;
-    private final HospitalService hospitalService;
+    private final HospitalRepository hospitalRepository;
 
     @Override
     public List<AmbulanceResource> findAll() {
@@ -30,8 +31,13 @@ public class AmbulanceServiceImpl implements AmbulanceService {
     @Override
     public AmbulanceResource save(AmbulanceResource ambulanceResource) {
         Ambulance ambulance = AMBULANCE_MAPPER.fromAmbulanceResource(ambulanceResource);
-        HospitalResource hospital = hospitalService.findById(ambulanceResource.getHospitalId());
-        ambulance.setHospital(HOSPITAL_MAPPER.fromHospitalResource(hospital));
+
+        if(ambulanceRepository.existsById(ambulance.getId())) {
+            throw new RuntimeException("Ambulance with id " + ambulance.getId() + " already exists");
+        }
+        if(!hospitalRepository.existsById(ambulance.getHospital().getId())) {
+            throw new RuntimeException("Hospital with id " + ambulance.getHospital().getId() + " does not exist");
+        }
         return AMBULANCE_MAPPER.toAmbulanceResource(ambulanceRepository.save(ambulance));
     }
 
