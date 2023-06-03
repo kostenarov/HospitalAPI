@@ -15,7 +15,31 @@ import java.util.List;
 public class AmbulanceController {
     private final AmbulanceService ambulanceService;
 
-    @GetMapping
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody AmbulanceResource ambulanceResource) {
+        return ResponseEntity.created(UriComponentsBuilder.fromPath("/api/v1/ambulance/{id}")
+                .buildAndExpand(ambulanceService.save(ambulanceResource).getId()).toUri()).build();
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody AmbulanceResource ambulanceResource) {
+        return ResponseEntity.created(UriComponentsBuilder.fromPath("/api/v1/ambulance/{id}")
+                .buildAndExpand(ambulanceService.update(ambulanceResource).getId()).toUri()).build();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        ambulanceService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/hospital/{id}")
+    public ResponseEntity<?> findByHospitalId(@PathVariable Long id) {
+        return ResponseEntity.ok(ambulanceService.findByHospitalId(id));
+    }
+
+
+    @GetMapping("/all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(ambulanceService.findAll());
     }
@@ -25,14 +49,4 @@ public class AmbulanceController {
         return ResponseEntity.ok(ambulanceService.findById(id));
     }
 
-    @GetMapping("/hospital/{id}")
-    public List<ResponseEntity<?>> findByHospitalId(@PathVariable Long id) {
-        return null;
-    }
-
-    @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody AmbulanceResource ambulanceResource) {
-        return ResponseEntity.created(UriComponentsBuilder.fromPath("/api/v1/ambulance/{id}")
-                .buildAndExpand(ambulanceService.save(ambulanceResource).getId()).toUri()).build();
-    }
 }

@@ -57,4 +57,16 @@ public class AmbulanceServiceImpl implements AmbulanceService {
                 .filter(ambulance -> ambulance.getHospital().getId().equals(id))
                 .toList());
     }
+
+    @Override
+    public AmbulanceResource update(AmbulanceResource ambulanceResource) {
+        Ambulance ambulance = AMBULANCE_MAPPER.fromAmbulanceResource(ambulanceResource);
+        if(!ambulanceRepository.existsById(ambulance.getId())) {
+            throw new RuntimeException("Ambulance with id " + ambulance.getId() + " does not exist");
+        }
+        if(!hospitalRepository.existsById(ambulance.getHospital().getId())) {
+            throw new RuntimeException("Hospital with id " + ambulance.getHospital().getId() + " does not exist");
+        }
+        return AMBULANCE_MAPPER.toAmbulanceResource(ambulanceRepository.save(ambulance));
+    }
 }

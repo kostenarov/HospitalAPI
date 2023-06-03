@@ -54,4 +54,10 @@ public class DoctorServiceImpl implements DoctorService {
             return null;
         }).toList().get(0);
     }
+
+    @Override
+    public DoctorResource update(DoctorResource doctorResource) {
+        Doctor doctor = DOCTOR_MAPPER.fromDoctorResource(doctorResource);
+        return DOCTOR_MAPPER.toDoctorResource(DoctorRepository.save(doctor));
+    }
 }

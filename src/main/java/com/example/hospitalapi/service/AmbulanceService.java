@@ -14,4 +14,6 @@ public interface AmbulanceService {
     void deleteById(Long id);
 
     List<AmbulanceResource> findByHospitalId(Long id);
+
+    AmbulanceResource update(AmbulanceResource ambulanceResource);
 }

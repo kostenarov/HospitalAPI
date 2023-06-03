@@ -14,4 +14,6 @@ public interface RoomService {
     void deleteById(Long id);
 
     List<RoomResource> findByHospitalId(Long id);
+
+    RoomResource update(RoomResource roomResource);
 }

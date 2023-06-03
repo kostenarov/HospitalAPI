@@ -4,6 +4,7 @@ import com.example.hospitalapi.controller.resources.HospitalResource;
 import com.example.hospitalapi.controller.resources.RoomResource;
 import com.example.hospitalapi.entity.Room;
 import com.example.hospitalapi.repository.RoomRepository;
+import com.example.hospitalapi.service.BedService;
 import com.example.hospitalapi.service.HospitalService;
 import com.example.hospitalapi.service.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import static com.example.hospitalapi.mapper.RoomMapper.ROOM_MAPPER;
 public class RoomServiceImpl implements RoomService {
     private final RoomRepository RoomRepository;
     private final HospitalService hospitalService;
+    private final BedService bedService;
 
     @Override
     public List<RoomResource> findAll() {
@@ -48,5 +50,13 @@ public class RoomServiceImpl implements RoomService {
         return ROOM_MAPPER.toRoomResources(RoomRepository.findAll().stream()
                 .filter(room -> room.getHospital().getId().equals(id))
                 .toList());
+    }
+
+    @Override
+    public RoomResource update(RoomResource roomResource) {
+        Room room = ROOM_MAPPER.fromRoomResource(roomResource);
+        HospitalResource hospital = hospitalService.findById(roomResource.getHospitalId());
+        room.setHospital(HOSPITAL_MAPPER.fromHospitalResource(hospital));
+        return ROOM_MAPPER.toRoomResource(RoomRepository.save(room));
     }
 }

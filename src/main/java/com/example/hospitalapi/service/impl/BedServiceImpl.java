@@ -52,17 +52,20 @@ public class BedServiceImpl implements BedService {
                 .toList().get(0));
     }
 
-    /*@Override
-    public List<BedResource> findByPatientId(Long id) {
-        return BED_MAPPER.toResources(bedRepository.findAll().stream()
-                .filter(bed -> bed.getPatient().getId().equals(id))
-                .toList());
-    }*/
-
     @Override
     public List<BedResource> findByHospitalId(Long id) {
         return BED_MAPPER.toBedResources(bedRepository.findAll().stream()
                 .filter(bed -> bed.getRoom().getHospital().getId().equals(id))
                 .toList());
+    }
+
+    @Override
+    public BedResource update(BedResource bedResource) {
+        if(bedResource.getId() == null) {
+            return save(bedResource);
+        } else {
+            Bed bed = BED_MAPPER.fromBedResource(bedResource);
+            return BED_MAPPER.toBedResource(bedRepository.save(bed));
+        }
     }
 }

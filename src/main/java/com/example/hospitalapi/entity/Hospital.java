@@ -3,12 +3,15 @@ package com.example.hospitalapi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Entity
 @Data
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class Hospital {
 
     @Id

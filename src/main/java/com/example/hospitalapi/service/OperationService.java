@@ -21,4 +21,6 @@ public interface OperationService {
     OperationResource findByPatientId(Long id);
 
     List<OperationResource> findByDate(Date date);
+
+    OperationResource update(OperationResource operationResource);
 }

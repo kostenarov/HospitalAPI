@@ -57,4 +57,10 @@ public class OperationServiceImpl implements OperationService{
     public List<OperationResource> findByDate(Date date) {
         return findAll().stream().filter(operationResource -> operationResource.getDate().equals(date)).toList();
     }
+
+    @Override
+    public OperationResource update(OperationResource operationResource) {
+        Operation operation = OPERATION_MAPPER.fromOperationResource(operationResource);
+        return OPERATION_MAPPER.toOperationResource(operationRepository.save(operation));
+    }
 }
