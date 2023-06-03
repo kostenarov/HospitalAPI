@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface AmbulanceMapper {
-    public AmbulanceMapper AMBULANCE_MAPPER = Mappers.getMapper(AmbulanceMapper.class);
+    AmbulanceMapper AMBULANCE_MAPPER = Mappers.getMapper(AmbulanceMapper.class);
 
     @Mapping(source = "hospital.id", target = "hospitalId")
     AmbulanceResource toAmbulanceResource(Ambulance ambulance);

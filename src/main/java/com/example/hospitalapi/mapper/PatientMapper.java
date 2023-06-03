@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface PatientMapper {
-    public PatientMapper PATIENT_MAPPER = Mappers.getMapper(PatientMapper.class);
+    PatientMapper PATIENT_MAPPER = Mappers.getMapper(PatientMapper.class);
 
     @Mapping(source = "bed.id", target = "bedId")
     @Mapping(source = "operation.id", target = "operationId")

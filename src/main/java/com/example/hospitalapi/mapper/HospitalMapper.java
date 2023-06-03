@@ -3,7 +3,6 @@ package com.example.hospitalapi.mapper;
 import com.example.hospitalapi.controller.resources.HospitalResource;
 import com.example.hospitalapi.entity.Hospital;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

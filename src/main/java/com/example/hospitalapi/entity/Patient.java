@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Entity
 @Data
-@Component
 public class Patient extends Person {
 
     @OneToOne
@@ -19,5 +18,4 @@ public class Patient extends Person {
     private Operation operation;
 
     private Date admissionDate;
-
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface BedMapper {
 
-    public BedMapper BED_MAPPER = Mappers.getMapper(BedMapper.class);
+    BedMapper BED_MAPPER = Mappers.getMapper(BedMapper.class);
 
     @Mapping(source = "room.id", target = "roomId")
     @Mapping(source = "patient.id", target = "patientId")

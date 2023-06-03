@@ -10,14 +10,14 @@ import java.util.List;
 
 @Mapper
 public interface OperationMapper {
-    public OperationMapper OPERATION_MAPPER = Mappers.getMapper(OperationMapper.class);
+    OperationMapper OPERATION_MAPPER = Mappers.getMapper(OperationMapper.class);
 
-    @Mapping(source = "operation.id", target = "operationId")
+    @Mapping(source = "hospital.id", target = "hospitalId")
     @Mapping(source = "patient.id", target = "patientId")
     @Mapping(source = "doctor.id", target = "doctorId")
     OperationResource toOperationResource(Operation operation);
 
-    @Mapping(source = "operationId", target = "operation.id")
+    @Mapping(source = "hospitalId", target = "hospital.id")
     @Mapping(source = "patientId", target = "patient.id")
     @Mapping(source = "doctorId", target = "doctor.id")
     Operation fromOperationResource(OperationResource operationResource);

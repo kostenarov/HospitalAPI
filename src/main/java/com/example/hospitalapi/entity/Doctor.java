@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Data
-@Component
 public class Doctor extends Person{
 
     @ManyToOne(fetch = FetchType.LAZY)

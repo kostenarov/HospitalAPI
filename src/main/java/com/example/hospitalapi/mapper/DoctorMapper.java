@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(uses = OperationMapper.class)
 public interface DoctorMapper {
-    public DoctorMapper DOCTOR_MAPPER = Mappers.getMapper(DoctorMapper.class);
+    DoctorMapper DOCTOR_MAPPER = Mappers.getMapper(DoctorMapper.class);
 
     @Mapping(source = "hospital.id", target = "hospitalId")
     DoctorResource toDoctorResource(Doctor doctor);

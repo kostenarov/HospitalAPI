@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(uses = BedMapper.class)
 public interface RoomMapper {
-    public RoomMapper ROOM_MAPPER = Mappers.getMapper(RoomMapper.class);
+    RoomMapper ROOM_MAPPER = Mappers.getMapper(RoomMapper.class);
 
     @Mapping(source = "hospital.id", target = "hospitalId")
     RoomResource toRoomResource(Room room);
