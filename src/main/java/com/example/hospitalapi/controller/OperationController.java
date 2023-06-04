@@ -12,7 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.sql.Date;
 
 @RestController
-@RequestMapping("/api/operation")
+@RequestMapping("/api/v1/operation")
 @RequiredArgsConstructor
 public class OperationController {
     private final OperationService operationService;

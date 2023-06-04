@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/bed")
+@RequestMapping("/api/v1/bed")
 @RequiredArgsConstructor
 public class BedController {
     private final BedService bedService;

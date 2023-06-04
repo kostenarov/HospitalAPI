@@ -3,6 +3,8 @@ package com.example.hospitalapi.controller.resources;
 import com.example.hospitalapi.entity.Person;
 import lombok.Data;
 
+import java.sql.Date;
+
 @Data
 public class PatientResource {
     private Long id;
@@ -11,6 +13,7 @@ public class PatientResource {
     private Long bedId;
     private Long operationId;
     private Long hospitalId;
+    private Date admissionDate;
 
     public Long getOperationId() {
         return operationId;

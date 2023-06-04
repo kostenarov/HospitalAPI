@@ -32,6 +32,7 @@ public class RoomServiceImpl implements RoomService {
         Room room = ROOM_MAPPER.fromRoomResource(roomResource);
         HospitalResource hospital = hospitalService.findById(roomResource.getHospitalId());
         room.setHospital(HOSPITAL_MAPPER.fromHospitalResource(hospital));
+        room.setBeds(roomResource.getBeds());
         return ROOM_MAPPER.toRoomResource(RoomRepository.save(room));
     }
 

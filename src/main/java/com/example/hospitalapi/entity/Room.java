@@ -18,6 +18,6 @@ public class Room {
     @ManyToOne
     private Hospital hospital;
 
-    @OneToMany
+    @OneToMany(mappedBy = "room")
     private List<Bed> beds;
 }

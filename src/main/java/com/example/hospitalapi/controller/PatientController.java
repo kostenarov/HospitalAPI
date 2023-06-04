@@ -13,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/patient")
+@RequestMapping("/api/v1/patient")
 @RequiredArgsConstructor
 public class PatientController {
     private final PatientService patientService;
