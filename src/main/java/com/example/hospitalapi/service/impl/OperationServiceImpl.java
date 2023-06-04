@@ -40,22 +40,22 @@ public class OperationServiceImpl implements OperationService{
 
     @Override
     public List<OperationResource> findByHospitalId(Long id) {
-        return findAll().stream().filter(operationResource -> operationResource.getHospitalId().equals(id)).toList();
+        return OPERATION_MAPPER.toOperationResources(operationRepository.findByHospitalId(id));
     }
 
     @Override
     public List<OperationResource> findByDoctorId(Long id) {
-        return findAll().stream().filter(operationResource -> operationResource.getDoctorId().equals(id)).toList();
+        return OPERATION_MAPPER.toOperationResources(operationRepository.findByDoctorId(id));
     }
 
     @Override
     public OperationResource findByPatientId(Long id) {
-        return findAll().stream().filter(operationResource -> operationResource.getPatientId().equals(id)).toList().get(0);
+        return OPERATION_MAPPER.toOperationResource(operationRepository.findByPatientId(id));
     }
 
     @Override
     public List<OperationResource> findByDate(Date date) {
-        return findAll().stream().filter(operationResource -> operationResource.getDate().equals(date)).toList();
+        return OPERATION_MAPPER.toOperationResources(operationRepository.findByOperationDate(date));
     }
 
     @Override

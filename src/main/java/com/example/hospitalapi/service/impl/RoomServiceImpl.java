@@ -47,9 +47,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<RoomResource> findByHospitalId(Long id) {
-        return ROOM_MAPPER.toRoomResources(RoomRepository.findAll().stream()
-                .filter(room -> room.getHospital().getId().equals(id))
-                .toList());
+        return ROOM_MAPPER.toRoomResources(RoomRepository.findByHospitalId(id));
     }
 
     @Override

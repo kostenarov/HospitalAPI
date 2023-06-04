@@ -40,19 +40,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<DoctorResource> findByHospitalId(Long id) {
-        return findAll().stream().filter(doctorResource -> doctorResource.getHospitalId().equals(id)).toList();
-    }
-
-    @Override
-    public DoctorResource findByOperationId(Long id) {
-        return findAll().stream().map(doctorResource -> {
-            for(OperationResource temp : doctorResource.getOperations()){
-                if(temp.getId().equals(id)){
-                    return doctorResource;
-                }
-            }
-            return null;
-        }).toList().get(0);
+        return DOCTOR_MAPPER.toDoctorResources(DoctorRepository.findByHospitalId(id));
     }
 
     @Override

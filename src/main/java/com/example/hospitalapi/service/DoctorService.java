@@ -15,7 +15,5 @@ public interface DoctorService {
 
     List<DoctorResource> findByHospitalId(Long id);
 
-    DoctorResource findByOperationId(Long id);
-
     DoctorResource update(DoctorResource doctorResource);
 }

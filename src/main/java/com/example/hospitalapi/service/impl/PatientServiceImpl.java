@@ -69,27 +69,21 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientResource> findByHospitalId(Long id) {
-        return null;
+        return PATIENT_MAPPER.toPatientResources(PatientRepository.findByBedRoomHospitalId(id));
     }
 
     @Override
     public List<PatientResource> findByRoomId(Long id) {
-        return bedService.findByRoomId(id).stream()
-                .map(bed -> findById(bed.getPatientId()))
-                .toList();
+        return PATIENT_MAPPER.toPatientResources(PatientRepository.findByBedRoomId(id));
     }
 
     @Override
     public PatientResource findByBedId(Long id) {
-        return findAll().stream()
-                .filter(patient -> patient.getBedId().equals(id))
-                .toList().get(0);
+        return PATIENT_MAPPER.toPatientResource(PatientRepository.findByBedId(id));
     }
 
     @Override
     public PatientResource findByOperationId(Long id) {
-        return findAll().stream()
-                .filter(patient -> patient.getOperationId().equals(id))
-                .toList().get(0);
+        return PATIENT_MAPPER.toPatientResource(PatientRepository.findByOperationId(id));
     }
 }

@@ -53,9 +53,7 @@ public class AmbulanceServiceImpl implements AmbulanceService {
 
     @Override
     public List<AmbulanceResource> findByHospitalId(Long id) {
-        return AMBULANCE_MAPPER.toAmbulanceResources(ambulanceRepository.findAll().stream()
-                .filter(ambulance -> ambulance.getHospital().getId().equals(id))
-                .toList());
+        return AMBULANCE_MAPPER.toAmbulanceResources(ambulanceRepository.findByHospitalId(id));
     }
 
     @Override

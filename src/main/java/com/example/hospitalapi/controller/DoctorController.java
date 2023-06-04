@@ -45,9 +45,4 @@ public class DoctorController {
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity.ok(doctorService.findById(id));
     }
-
-    @GetMapping("/operation/{id}")
-    public ResponseEntity<?> findByOperationId(@PathVariable Long id) {
-        return ResponseEntity.ok(doctorService.findByOperationId(id));
-    }
 }
