@@ -2,15 +2,12 @@ package com.example.hospitalapi.controller;
 
 import com.example.hospitalapi.controller.resources.PatientResource;
 import com.example.hospitalapi.entity.Operation;
-import com.example.hospitalapi.service.BedService;
-import com.example.hospitalapi.service.OperationService;
 import com.example.hospitalapi.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/patient")

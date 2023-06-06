@@ -1,9 +1,7 @@
 package com.example.hospitalapi.controller;
 
 import com.example.hospitalapi.controller.resources.OperationResource;
-import com.example.hospitalapi.service.DoctorService;
 import com.example.hospitalapi.service.OperationService;
-import com.example.hospitalapi.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
