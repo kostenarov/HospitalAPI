@@ -2,7 +2,10 @@ package com.example.hospitalapi.service.impl;
 
 import com.example.hospitalapi.controller.resources.OperationResource;
 import com.example.hospitalapi.entity.Operation;
+import com.example.hospitalapi.repository.DoctorRepository;
+import com.example.hospitalapi.repository.HospitalRepository;
 import com.example.hospitalapi.repository.OperationRepository;
+import com.example.hospitalapi.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.hospitalapi.service.OperationService;
@@ -16,6 +19,9 @@ import static com.example.hospitalapi.mapper.OperationMapper.OPERATION_MAPPER;
 @RequiredArgsConstructor
 public class OperationServiceImpl implements OperationService{
     private final OperationRepository operationRepository;
+    private final DoctorRepository doctorRepository;
+    private final HospitalRepository hospitalRepository;
+    private final PatientRepository patientRepository;
 
     @Override
     public List<OperationResource> findAll() {
@@ -25,6 +31,25 @@ public class OperationServiceImpl implements OperationService{
     @Override
     public OperationResource save(OperationResource operationResource) {
         Operation operation = OPERATION_MAPPER.fromOperationResource(operationResource);
+        doctorRepository.findById(operationResource.getDoctorId())
+                .ifPresentOrElse(
+                        operation::setDoctor,
+                        () -> {
+                            throw new RuntimeException("Doctor not found");
+                        }
+                );
+        hospitalRepository.findById(operationResource.getHospitalId())
+                .ifPresentOrElse(operation::setHospital,
+                        () -> {
+                            throw new RuntimeException("Hospital not found");
+                        }
+                );
+        patientRepository.findById(operationResource.getPatientId())
+                .ifPresentOrElse(operation::setPatient,
+                        () -> {
+                            throw new RuntimeException("Patient not found");
+                        }
+                );
         return OPERATION_MAPPER.toOperationResource(operationRepository.save(operation));
     }
 
@@ -61,6 +86,27 @@ public class OperationServiceImpl implements OperationService{
     @Override
     public OperationResource update(OperationResource operationResource) {
         Operation operation = OPERATION_MAPPER.fromOperationResource(operationResource);
+        doctorRepository.findById(operationResource.getDoctorId())
+                .ifPresentOrElse(
+                        operation::setDoctor,
+                        () -> {
+                            throw new RuntimeException("Doctor not found");
+                        }
+                );
+        hospitalRepository.findById(operationResource.getHospitalId())
+                .ifPresentOrElse(operation::setHospital,
+                        () -> {
+                            throw new RuntimeException("Hospital not found");
+                        }
+                );
+        patientRepository.findById(operationResource.getPatientId())
+                .ifPresentOrElse(operation::setPatient,
+                        () -> {
+                            throw new RuntimeException("Patient not found");
+                        }
+                );
+        if(operationResource.getDate() != null)
+            operation.setOperationDate(operationResource.getDate());
         return OPERATION_MAPPER.toOperationResource(operationRepository.save(operation));
     }
 }

@@ -26,6 +26,10 @@ public class HospitalServiceImpl implements HospitalService {
         if(hospitalRepository.existsByName(hospital.getName())) {
             throw new RuntimeException("Hospital with name " + hospital.getName() + " already exists");
         }
+        hospital.setRooms(null);
+        hospital.setAmbulances(null);
+        hospital.setDoctors(null);
+        hospital.setOperations(null);
         return HOSPITAL_MAPPER.toHospitalResource(hospitalRepository.save(hospital));
     }
 

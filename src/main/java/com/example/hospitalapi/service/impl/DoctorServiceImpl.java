@@ -1,10 +1,9 @@
 package com.example.hospitalapi.service.impl;
 
 import com.example.hospitalapi.controller.resources.DoctorResource;
-import com.example.hospitalapi.controller.resources.OperationResource;
 import com.example.hospitalapi.entity.Doctor;
-import com.example.hospitalapi.entity.Operation;
 import com.example.hospitalapi.repository.DoctorRepository;
+import com.example.hospitalapi.repository.HospitalRepository;
 import com.example.hospitalapi.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,15 +16,24 @@ import static com.example.hospitalapi.mapper.DoctorMapper.DOCTOR_MAPPER;
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository DoctorRepository;
+    private final HospitalRepository hospitalRepository;
     @Override
     public List<DoctorResource> findAll() {
         return DOCTOR_MAPPER.toDoctorResources(DoctorRepository.findAll());
     }
 
     @Override
-    public DoctorResource save(DoctorResource doctor) {
-        Doctor doctor1 = DOCTOR_MAPPER.fromDoctorResource(doctor);
-        return DOCTOR_MAPPER.toDoctorResource(DoctorRepository.save(doctor1));
+    public DoctorResource save(DoctorResource doctorResource) {
+        Doctor doctor = DOCTOR_MAPPER.fromDoctorResource(doctorResource);
+        hospitalRepository.findById(doctorResource.getHospitalId())
+                .ifPresentOrElse(
+                        doctor::setHospital,
+                        () -> {
+                            throw new RuntimeException("Hospital not found");
+                        }
+                );
+        doctor.setOperations(null);
+        return DOCTOR_MAPPER.toDoctorResource(DoctorRepository.save(doctor));
     }
 
     @Override
@@ -46,6 +54,17 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public DoctorResource update(DoctorResource doctorResource) {
         Doctor doctor = DOCTOR_MAPPER.fromDoctorResource(doctorResource);
+        hospitalRepository.findById(doctorResource.getHospitalId())
+                .ifPresentOrElse(
+                        doctor::setHospital,
+                        () -> {
+                            throw new RuntimeException("Hospital not found");
+                        }
+                );
+        if(doctorResource.getId() == null)
+            throw new RuntimeException("Id is null");
+        if(!DoctorRepository.existsById(doctorResource.getId()))
+            throw new RuntimeException("Doctor not found");
         return DOCTOR_MAPPER.toDoctorResource(DoctorRepository.save(doctor));
     }
 }

@@ -1,15 +1,14 @@
 package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 @MappedSuperclass
 public abstract class Person {
     @Id
     @GeneratedValue
-    protected Long id;
-    protected int age;
-    protected String FirstName, LastName;
+    private Long id;
+    private int age;
+    private String FirstName, LastName;
 
     public Long getId() {
         return id;
@@ -17,5 +16,29 @@ public abstract class Person {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
     }
 }

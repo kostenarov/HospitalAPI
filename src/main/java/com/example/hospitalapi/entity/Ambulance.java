@@ -11,6 +11,5 @@ public class Ambulance {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 }

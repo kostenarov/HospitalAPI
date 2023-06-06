@@ -2,14 +2,12 @@ package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
 
 import java.util.List;
 
 @Entity
 @Data
-@OnDelete(action = OnDeleteAction.CASCADE)
 public class Doctor extends Person{
 
     @ManyToOne(fetch = FetchType.LAZY)

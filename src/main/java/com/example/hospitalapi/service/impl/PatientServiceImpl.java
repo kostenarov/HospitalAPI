@@ -1,29 +1,25 @@
 package com.example.hospitalapi.service.impl;
 
-import com.example.hospitalapi.controller.resources.OperationResource;
 import com.example.hospitalapi.controller.resources.PatientResource;
-import com.example.hospitalapi.entity.Bed;
 import com.example.hospitalapi.entity.Operation;
 import com.example.hospitalapi.entity.Patient;
+import com.example.hospitalapi.repository.BedRepository;
+import com.example.hospitalapi.repository.OperationRepository;
 import com.example.hospitalapi.repository.PatientRepository;
-import com.example.hospitalapi.service.BedService;
-import com.example.hospitalapi.service.OperationService;
 import com.example.hospitalapi.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.example.hospitalapi.mapper.BedMapper.BED_MAPPER;
-import static com.example.hospitalapi.mapper.OperationMapper.OPERATION_MAPPER;
 import static com.example.hospitalapi.mapper.PatientMapper.PATIENT_MAPPER;
 
 @Service
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
     private final PatientRepository PatientRepository;
-    private final OperationService operationService;
-    private final BedService bedService;
+    private final BedRepository bedRepository;
+    private final OperationRepository operationRepository;
 
     @Override
     public List<PatientResource> findAll() {
@@ -33,20 +29,38 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public PatientResource save(PatientResource patientResource) {
         Patient patient = PATIENT_MAPPER.fromPatientResource(patientResource);
-        Operation operation = null;
-        patient.setOperation(operation);
-        Bed bed = BED_MAPPER.fromBedResource(bedService.findById(patientResource.getBedId()));
-        patient.setBed(bed);
+        bedRepository.findById(patientResource.getBedId())
+                .ifPresentOrElse(
+                        patient::setBed,
+                        () -> {
+                            throw new RuntimeException("Bed not found");
+                        }
+                );
+        patient.getBed().setPatient(patient);
+        patient.setAge(patientResource.getAge());
+        patient.setFirstName(patientResource.getFirstName());
+        patient.setLastName(patientResource.getLastName());
+        patient.setAdmissionDate(patientResource.getAdmissionDate());
+        patient.setOperation(null);
         return PATIENT_MAPPER.toPatientResource(PatientRepository.save(patient));
     }
 
     @Override
     public PatientResource update(PatientResource patientResource) {
         Patient patient = PATIENT_MAPPER.fromPatientResource(patientResource);
-        Operation operation = OPERATION_MAPPER.fromOperationResource(operationService.findById(patientResource.getOperationId()));
-        patient.setOperation(operation);
-        Bed bed = BED_MAPPER.fromBedResource(bedService.findById(patientResource.getBedId()));
-        patient.setBed(bed);
+        bedRepository.findById(patientResource.getBedId())
+                .ifPresentOrElse(
+                        patient::setBed,
+                        () -> {
+                            throw new RuntimeException("Bed not found");
+                        }
+                );
+        patient.getBed().setPatient(patient);
+        patient.setAge(patientResource.getAge());
+        patient.setFirstName(patientResource.getFirstName());
+        patient.setLastName(patientResource.getLastName());
+        patient.setAdmissionDate(patientResource.getAdmissionDate());
+        patient.setOperation(patientResource.getOperationId() == null ? null : operationRepository.findById(patientResource.getOperationId()).get());
         return PATIENT_MAPPER.toPatientResource(PatientRepository.save(patient));
     }
 
