@@ -3,6 +3,7 @@ package com.example.hospitalapi.service.impl;
 import com.example.hospitalapi.controller.resources.BedResource;
 import com.example.hospitalapi.entity.Bed;
 import com.example.hospitalapi.repository.BedRepository;
+import com.example.hospitalapi.repository.PatientRepository;
 import com.example.hospitalapi.repository.RoomRepository;
 import com.example.hospitalapi.service.BedService;
 
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.hospitalapi.mapper.BedMapper.BED_MAPPER;
 
@@ -18,6 +20,7 @@ import static com.example.hospitalapi.mapper.BedMapper.BED_MAPPER;
 public class BedServiceImpl implements BedService {
     private final BedRepository bedRepository;
     private final RoomRepository roomRepository;
+    private final PatientRepository patientRepository;
 
     @Override
     public List<BedResource> findAll() {
@@ -39,12 +42,13 @@ public class BedServiceImpl implements BedService {
     }
 
     @Override
-    public BedResource findById(Long id) {
-        return BED_MAPPER.toBedResource(bedRepository.findById(id).get());
+    public Optional<BedResource> findById(Long id) {
+        return bedRepository.findById(id).map(BED_MAPPER::toBedResource);
     }
 
     @Override
     public void deleteById(Long id) {
+        patientRepository.deleteByBedId(id);
         bedRepository.deleteById(id);
     }
 
@@ -54,8 +58,10 @@ public class BedServiceImpl implements BedService {
     }
 
     @Override
-    public BedResource findByPatientId(Long id) {
-        return BED_MAPPER.toBedResource(bedRepository.findByPatientId(id));
+    public Optional<BedResource> findByPatientId(Long id) {
+        Long patientId = patientRepository.findById(id).get().getId();
+        BedResource bedRes = BED_MAPPER.toBedResource(bedRepository.findByPatientId(patientId));
+        return Optional.of(bedRes);
     }
 
     @Override

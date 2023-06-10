@@ -1,16 +1,18 @@
 package com.example.hospitalapi.service;
 
+import com.example.hospitalapi.controller.resources.BedResource;
 import com.example.hospitalapi.controller.resources.PatientResource;
 import com.example.hospitalapi.entity.Operation;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PatientService {
     List<PatientResource> findAll();
 
     PatientResource save(PatientResource patient);
 
-    PatientResource findById(Long id);
+    Optional<PatientResource> findById(Long id);
 
     void deleteById(Long id);
 
@@ -18,9 +20,9 @@ public interface PatientService {
 
     List<PatientResource> findByRoomId(Long id);
 
-    PatientResource findByBedId(Long id);
+    Optional<PatientResource> findByBedId(Long id);
 
-    PatientResource findByOperationId(Long id);
+    Optional<PatientResource> findByOperationId(Long id);
 
     PatientResource update(PatientResource patientResource);
 

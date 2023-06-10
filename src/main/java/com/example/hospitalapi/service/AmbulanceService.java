@@ -3,13 +3,14 @@ package com.example.hospitalapi.service;
 import com.example.hospitalapi.controller.resources.AmbulanceResource;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AmbulanceService {
     List<AmbulanceResource> findAll();
 
     AmbulanceResource save(AmbulanceResource ambulanceResource);
 
-    AmbulanceResource findById(Long id);
+    Optional<AmbulanceResource> findById(Long id);
 
     void deleteById(Long id);
 

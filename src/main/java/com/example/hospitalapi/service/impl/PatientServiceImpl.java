@@ -1,5 +1,6 @@
 package com.example.hospitalapi.service.impl;
 
+import com.example.hospitalapi.controller.resources.OperationResource;
 import com.example.hospitalapi.controller.resources.PatientResource;
 import com.example.hospitalapi.entity.Operation;
 import com.example.hospitalapi.entity.Patient;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.hospitalapi.mapper.PatientMapper.PATIENT_MAPPER;
 
@@ -59,14 +61,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void addOperation(Long patientId, Operation operation) {
-        PatientResource patientResource = findById(patientId);
+        PatientResource patientResource = findById(patientId).get();
         patientResource.setOperationId(operation.getId());
         update(patientResource);
     }
 
     @Override
-    public PatientResource findById(Long id) {
-        return PATIENT_MAPPER.toPatientResource(patientRepository.findById(id).get());
+    public Optional<PatientResource> findById(Long id) {
+        return patientRepository.findById(id).map(PATIENT_MAPPER::toPatientResource);
     }
 
     @Override
@@ -88,12 +90,16 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientResource findByBedId(Long id) {
-        return PATIENT_MAPPER.toPatientResource(patientRepository.findByBedId(id));
+    public Optional<PatientResource> findByBedId(Long id) {
+        Long bedId = bedRepository.findById(id).get().getId();
+        PatientResource temp = PATIENT_MAPPER.toPatientResource(patientRepository.findByBedId(bedId));
+        return Optional.ofNullable(temp);
     }
 
     @Override
-    public PatientResource findByOperationId(Long id) {
-        return PATIENT_MAPPER.toPatientResource(patientRepository.findByOperationId(id));
+    public Optional<PatientResource> findByOperationId(Long id) {
+        Long operationId = operationRepository.findById(id).get().getId();
+        PatientResource temp = PATIENT_MAPPER.toPatientResource(patientRepository.findByOperationId(operationId));
+        return Optional.ofNullable(temp);
     }
 }

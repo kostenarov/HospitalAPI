@@ -12,6 +12,7 @@ import com.example.hospitalapi.service.OperationService;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.hospitalapi.mapper.OperationMapper.OPERATION_MAPPER;
 
@@ -54,8 +55,11 @@ public class OperationServiceImpl implements OperationService{
     }
 
     @Override
-    public OperationResource findById(Long id) {
-        return OPERATION_MAPPER.toOperationResource(operationRepository.findById(id).get());
+    public Optional<OperationResource> findById(Long id) {
+        if(!operationRepository.existsById(id)){
+            throw new RuntimeException("Operation not found");
+        }
+        return operationRepository.findById(id).map(OPERATION_MAPPER::toOperationResource);
     }
 
     @Override
@@ -74,8 +78,15 @@ public class OperationServiceImpl implements OperationService{
     }
 
     @Override
-    public OperationResource findByPatientId(Long id) {
-        return OPERATION_MAPPER.toOperationResource(operationRepository.findByPatientId(id));
+    public Optional<OperationResource> findByPatientId(Long id) {
+        if(!patientRepository.existsById(id)){
+            throw new RuntimeException("Patient not found");
+        }
+        if(!operationRepository.existsByPatientId(id)){
+            throw new RuntimeException("Operation not found");
+        }
+        Long operationId = operationRepository.findByPatientId(id).getId();
+        return operationRepository.findById(operationId).map(OPERATION_MAPPER::toOperationResource);
     }
 
     @Override

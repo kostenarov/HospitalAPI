@@ -10,5 +10,7 @@ import java.util.List;
 public interface RoomRepository extends JpaRepository<Room, Long> {
     public List<Room> findByHospitalId(Long id);
 
-    List<Room> findAllByHospitalId(Long id);
+    public List<Room> findAllByHospitalId(Long id);
+
+    public void deleteAllByHospitalId(Long id);
 }

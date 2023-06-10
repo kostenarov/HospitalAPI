@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.hospitalapi.mapper.AmbulanceMapper.AMBULANCE_MAPPER;
 
@@ -38,8 +39,8 @@ public class AmbulanceServiceImpl implements AmbulanceService {
     }
 
     @Override
-    public AmbulanceResource findById(Long id) {
-        return AMBULANCE_MAPPER.toAmbulanceResource(ambulanceRepository.findById(id).get());
+    public Optional<AmbulanceResource> findById(Long id) {
+        return ambulanceRepository.findById(id).map(AMBULANCE_MAPPER::toAmbulanceResource);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class AmbulanceServiceImpl implements AmbulanceService {
 
     @Override
     public List<AmbulanceResource> findByHospitalId(Long id) {
-        return AMBULANCE_MAPPER.toAmbulanceResources(ambulanceRepository.findByHospitalId(id));
+        return AMBULANCE_MAPPER.toAmbulanceResources(ambulanceRepository.findAllByHospitalId(id));
     }
 
     @Override

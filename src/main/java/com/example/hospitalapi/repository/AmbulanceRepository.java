@@ -10,5 +10,7 @@ import java.util.List;
 public interface AmbulanceRepository extends JpaRepository<Ambulance, Long> {
     public boolean existsById(Long id);
 
-    List<Ambulance> findAllByHospitalId(Long id);
+    public List<Ambulance> findAllByHospitalId(Long id);
+
+    public void deleteAllByHospitalId(Long id);
 }

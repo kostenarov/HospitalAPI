@@ -4,13 +4,14 @@ import com.example.hospitalapi.controller.resources.OperationResource;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface OperationService {
     List<OperationResource> findAll();
 
     OperationResource save(OperationResource operation);
 
-    OperationResource findById(Long id);
+    Optional<OperationResource> findById(Long id);
 
     void deleteById(Long id);
 
@@ -18,7 +19,7 @@ public interface OperationService {
 
     List<OperationResource> findByDoctorId(Long id);
 
-    OperationResource findByPatientId(Long id);
+    Optional<OperationResource> findByPatientId(Long id);
 
     List<OperationResource> findByDate(Date date);
 

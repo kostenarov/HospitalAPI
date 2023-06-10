@@ -1,26 +1,32 @@
 package com.example.hospitalapi.service.impl;
 
+import com.example.hospitalapi.controller.resources.BedResource;
 import com.example.hospitalapi.controller.resources.RoomResource;
 import com.example.hospitalapi.entity.Room;
+import com.example.hospitalapi.repository.BedRepository;
 import com.example.hospitalapi.repository.HospitalRepository;
+import com.example.hospitalapi.repository.PatientRepository;
 import com.example.hospitalapi.repository.RoomRepository;
 import com.example.hospitalapi.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.hospitalapi.mapper.RoomMapper.ROOM_MAPPER;
 
 @Service
 @RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
-    private final RoomRepository RoomRepository;
+    private final RoomRepository roomRepository;
     private final HospitalRepository hospitalRepository;
+    private final BedRepository bedRepository;
+    private final PatientRepository patientRepository;
 
     @Override
     public List<RoomResource> findAll() {
-        return ROOM_MAPPER.toRoomResources(RoomRepository.findAll());
+        return ROOM_MAPPER.toRoomResources(roomRepository.findAll());
     }
 
     @Override
@@ -35,23 +41,25 @@ public class RoomServiceImpl implements RoomService {
                         );
 
         room.setBeds(null);
-        return ROOM_MAPPER.toRoomResource(RoomRepository.save(room));
+        return ROOM_MAPPER.toRoomResource(roomRepository.save(room));
     }
 
     @Override
-    public RoomResource findById(Long id) {
-        Room room = RoomRepository.findById(id).get();
-        return ROOM_MAPPER.toRoomResource(room);
+    public Optional<RoomResource> findById(Long id) {
+        Room room = roomRepository.findById(id).get();
+        return Optional.of(ROOM_MAPPER.toRoomResource(room));
     }
 
     @Override
     public void deleteById(Long id) {
-        RoomRepository.deleteById(id);
+        patientRepository.deleteAllByBedRoomId(id);
+        bedRepository.deleteAllByRoomId(id);
+        roomRepository.deleteById(id);
     }
 
     @Override
     public List<RoomResource> findByHospitalId(Long id) {
-        return ROOM_MAPPER.toRoomResources(RoomRepository.findByHospitalId(id));
+        return ROOM_MAPPER.toRoomResources(roomRepository.findByHospitalId(id));
     }
 
     @Override
@@ -65,6 +73,6 @@ public class RoomServiceImpl implements RoomService {
                         }
                 );
 
-        return ROOM_MAPPER.toRoomResource(RoomRepository.save(room));
+        return ROOM_MAPPER.toRoomResource(roomRepository.save(room));
     }
 }
