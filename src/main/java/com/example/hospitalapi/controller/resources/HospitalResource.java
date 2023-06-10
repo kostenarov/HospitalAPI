@@ -7,7 +7,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.List;
 
 @Data
-@OnDelete(action = OnDeleteAction.CASCADE)
 public class HospitalResource {
     private Long id;
     private String name, city;

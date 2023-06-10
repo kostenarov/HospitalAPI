@@ -14,7 +14,7 @@ public interface OperationRepository extends JpaRepository<Operation, Long> {
 
     public List<Operation> findByDoctorId(Long id);
 
-    public List<Operation> findByHospitalId(Long id);
-
     public List<Operation> findByOperationDate(java.sql.Date date);
+
+    public List<Operation> findAllByHospitalId(Long id);
 }

@@ -2,7 +2,8 @@ package com.example.hospitalapi.service.impl;
 
 import com.example.hospitalapi.controller.resources.HospitalResource;
 import com.example.hospitalapi.entity.Hospital;
-import com.example.hospitalapi.repository.HospitalRepository;
+import com.example.hospitalapi.entity.Room;
+import com.example.hospitalapi.repository.*;
 import com.example.hospitalapi.service.HospitalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,12 @@ import static com.example.hospitalapi.mapper.HospitalMapper.HOSPITAL_MAPPER;
 @RequiredArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
     private final HospitalRepository hospitalRepository;
+    private final OperationRepository operationRepository;
+    private final AmbulanceRepository ambulanceRepository;
+    private final RoomRepository roomRepository;
+    private final DoctorRepository doctorRepository;
+    private final BedRepository bedRepository;
+
     @Override
     public List<HospitalResource> findAll() {
         return HOSPITAL_MAPPER.toHospitalResources(hospitalRepository.findAll());
@@ -35,6 +42,12 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public HospitalResource findById(Long id) {
+        Hospital hospital = hospitalRepository.findById(id).get();
+        hospital.setRooms(roomRepository.findAllByHospitalId(id));
+        hospital.setAmbulances(ambulanceRepository.findAllByHospitalId(id));
+        hospital.setDoctors(doctorRepository.findAllByHospitalId(id));
+        hospital.setOperations(operationRepository.findAllByHospitalId(id));
+
         return HOSPITAL_MAPPER.toHospitalResource(hospitalRepository.findById(id).get());
     }
 

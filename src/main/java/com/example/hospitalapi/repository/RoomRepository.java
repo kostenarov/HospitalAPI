@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
     public List<Room> findByHospitalId(Long id);
+
+    List<Room> findAllByHospitalId(Long id);
 }
