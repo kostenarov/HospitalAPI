@@ -11,10 +11,10 @@ import java.util.Optional;
 @Data
 public class Patient extends Person {
 
-    @OneToOne
+    @OneToOne(mappedBy = "patient")
     private Bed bed;
 
-    @OneToOne(optional = true)
+    @OneToOne(optional = true, mappedBy = "patient")
     private Operation operation;
 
     private Date admissionDate;

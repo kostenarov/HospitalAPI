@@ -13,6 +13,6 @@ public class Bed {
     @ManyToOne
     private Room room;
 
-    @OneToOne(optional = true)
+    @OneToOne(optional = true, mappedBy = "bed")
     private Patient patient;
 }

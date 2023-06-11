@@ -16,7 +16,7 @@ public class Operation {
     @ManyToOne
     private Hospital hospital;
 
-    @OneToOne
+    @OneToOne(mappedBy = "operation")
     private Patient patient;
 
     @ManyToOne
