@@ -8,7 +8,7 @@ public abstract class Person {
     @GeneratedValue
     private Long id;
     private int age;
-    private String FirstName, LastName;
+    private String firstName, lastName;
 
     public Long getId() {
         return id;
@@ -27,18 +27,18 @@ public abstract class Person {
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

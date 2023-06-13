@@ -2,13 +2,13 @@ package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+import org.hibernate.envers.Audited;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Entity
 @Data
+@Audited
 public class Patient extends Person {
 
     @OneToOne(mappedBy = "patient")
