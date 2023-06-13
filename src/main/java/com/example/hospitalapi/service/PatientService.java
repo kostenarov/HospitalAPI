@@ -1,6 +1,5 @@
 package com.example.hospitalapi.service;
 
-import com.example.hospitalapi.controller.resources.BedResource;
 import com.example.hospitalapi.controller.resources.PatientResource;
 import com.example.hospitalapi.entity.Operation;
 
@@ -27,4 +26,6 @@ public interface PatientService {
     PatientResource update(PatientResource patientResource);
 
     void addOperation(Long patientId, Operation operation);
+
+    List<PatientResource> findAllAudits(Long id);
 }

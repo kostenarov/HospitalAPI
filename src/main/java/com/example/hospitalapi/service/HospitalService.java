@@ -15,4 +15,8 @@ public interface HospitalService {
     void deleteById(Long id);
 
     HospitalResource update(HospitalResource hospitalResource);
+
+    Object findAllAudits(Long id);
+
+    Object getUpUntilDate(String date);
 }

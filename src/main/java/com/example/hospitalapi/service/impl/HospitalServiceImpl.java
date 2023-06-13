@@ -2,14 +2,16 @@ package com.example.hospitalapi.service.impl;
 
 import com.example.hospitalapi.controller.resources.HospitalResource;
 import com.example.hospitalapi.entity.Hospital;
-import com.example.hospitalapi.entity.Room;
 import com.example.hospitalapi.repository.*;
 import com.example.hospitalapi.service.HospitalService;
+import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
 
 import static com.example.hospitalapi.mapper.HospitalMapper.HOSPITAL_MAPPER;
 
@@ -17,12 +19,7 @@ import static com.example.hospitalapi.mapper.HospitalMapper.HOSPITAL_MAPPER;
 @RequiredArgsConstructor
 public class HospitalServiceImpl implements HospitalService {
     private final HospitalRepository hospitalRepository;
-    private final OperationRepository operationRepository;
-    private final AmbulanceRepository ambulanceRepository;
-    private final RoomRepository roomRepository;
-    private final DoctorRepository doctorRepository;
-    private final BedRepository bedRepository;
-    private final BedRepository patientRepository;
+    private final EntityManagerFactory entityManagerFactory;
 
 
     @Override
@@ -33,24 +30,16 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public HospitalResource save(HospitalResource hospitalResource) {
         Hospital hospital = HOSPITAL_MAPPER.fromHospitalResource(hospitalResource);
+        hospital.setCreatedDate(hospitalResource.getCreatedDate());
         if(hospitalRepository.existsByName(hospital.getName())) {
             throw new RuntimeException("Hospital with name " + hospital.getName() + " already exists");
         }
-        hospital.setRooms(null);
-        hospital.setAmbulances(null);
-        hospital.setDoctors(null);
-        hospital.setOperations(null);
         return HOSPITAL_MAPPER.toHospitalResource(hospitalRepository.save(hospital));
     }
 
     @Override
     public Optional<HospitalResource> findById(Long id) {
         Hospital hospital = hospitalRepository.findById(id).get();
-        hospital.setRooms(roomRepository.findAllByHospitalId(id));
-        hospital.setAmbulances(ambulanceRepository.findAllByHospitalId(id));
-        hospital.setDoctors(doctorRepository.findAllByHospitalId(id));
-        hospital.setOperations(operationRepository.findAllByHospitalId(id));
-
         return Optional.of(HOSPITAL_MAPPER.toHospitalResource(hospital));
     }
 
@@ -59,14 +48,6 @@ public class HospitalServiceImpl implements HospitalService {
         if(!hospitalRepository.existsById(id)) {
             throw new RuntimeException("Hospital with id " + id + " does not exist");
         }
-        ambulanceRepository.deleteAllByHospitalId(id);
-        operationRepository.deleteAllByHospitalId(id);
-        for(Room room : roomRepository.findAllByHospitalId(id)) {
-            patientRepository.deleteAllByRoomId(room.getId());
-            bedRepository.deleteAllByRoomId(room.getId());
-        }
-        roomRepository.deleteAllByHospitalId(id);
-        doctorRepository.deleteAllByHospitalId(id);
         hospitalRepository.deleteById(id);
     }
 
@@ -77,5 +58,41 @@ public class HospitalServiceImpl implements HospitalService {
             throw new RuntimeException("Hospital with id " + hospital.getId() + " does not exist");
         }
         return HOSPITAL_MAPPER.toHospitalResource(hospitalRepository.save(hospital));
+    }
+
+    @Override
+    public Object findAllAudits(Long id) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
+        List<Number> revisions = auditReader.getRevisions(Hospital.class, id);
+        List<HospitalResource> result = new ArrayList<>();
+        for(Number id1 : revisions) {
+            Hospital hospital = auditReader.find(Hospital.class, id, id1);
+            result.add(HOSPITAL_MAPPER.toHospitalResource(hospital));
+        }
+        return result;
+    }
+
+    @Override
+    public Object getUpUntilDate(String date) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
+        List<?> revisions = auditReader.createQuery()
+                .forRevisionsOfEntity(Hospital.class, true, true)
+                .getResultList();
+
+        Object result = null;
+
+        for (Object revision : revisions) {
+            if(((Hospital) revision).getCreatedDate() == null) {
+                break;
+            }
+
+            if(((Hospital) revision).getCreatedDate().before(Timestamp.valueOf(date)) ||
+                    ((Hospital) revision).getCreatedDate().equals(Timestamp.valueOf(date))) {
+                result = revision;
+                break;
+            }
+        }
+
+        return result;
     }
 }

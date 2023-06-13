@@ -2,13 +2,13 @@ package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import java.sql.Date;
 
+
 @Entity
 @Data
-@Audited
 public class Operation {
 
     @Id
@@ -16,12 +16,15 @@ public class Operation {
     private Long id;
 
     @ManyToOne
+    @NotAudited
     private Hospital hospital;
 
     @OneToOne
+    @NotAudited
     private Patient patient;
 
     @ManyToOne
+    @NotAudited
     private Doctor doctor;
 
     private Date operationDate;

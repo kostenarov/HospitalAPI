@@ -3,18 +3,22 @@ package com.example.hospitalapi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 
 import java.util.List;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 @Entity
 @Data
-@Audited
+@Audited(targetAuditMode = NOT_AUDITED)
 public class Doctor extends Person{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Hospital hospital;
 
     @OneToMany(mappedBy = "doctor")
+    @NotAudited
     private List<Operation> operations;
 }

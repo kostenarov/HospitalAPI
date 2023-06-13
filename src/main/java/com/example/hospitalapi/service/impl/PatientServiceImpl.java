@@ -1,6 +1,5 @@
 package com.example.hospitalapi.service.impl;
 
-import com.example.hospitalapi.controller.resources.OperationResource;
 import com.example.hospitalapi.controller.resources.PatientResource;
 import com.example.hospitalapi.entity.Operation;
 import com.example.hospitalapi.entity.Patient;
@@ -8,9 +7,13 @@ import com.example.hospitalapi.repository.BedRepository;
 import com.example.hospitalapi.repository.OperationRepository;
 import com.example.hospitalapi.repository.PatientRepository;
 import com.example.hospitalapi.service.PatientService;
+import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +25,7 @@ public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
     private final BedRepository bedRepository;
     private final OperationRepository operationRepository;
+    private final EntityManagerFactory entityManagerFactory;
 
     @Override
     public List<PatientResource> findAll() {
@@ -32,6 +36,7 @@ public class PatientServiceImpl implements PatientService {
     public PatientResource save(PatientResource patientResource) {
         Patient patient = validatePatient(patientResource);
         patient.setOperation(null);
+        patient.setBed(patientResource.getBedId() == null ? null : bedRepository.findById(patientResource.getBedId()).get());
         return PATIENT_MAPPER.toPatientResource(patientRepository.save(patient));
     }
 
@@ -101,5 +106,17 @@ public class PatientServiceImpl implements PatientService {
         Long operationId = operationRepository.findById(id).get().getId();
         PatientResource temp = PATIENT_MAPPER.toPatientResource(patientRepository.findByOperationId(operationId));
         return Optional.ofNullable(temp);
+    }
+
+    @Override
+    public List<PatientResource> findAllAudits(Long id) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
+        List<Number> revisions = auditReader.getRevisions(Patient.class, id);
+        List<PatientResource> result = new ArrayList<>();
+        for (Number revision : revisions) {
+            Patient patient = auditReader.find(Patient.class, id, revision);
+            result.add(PATIENT_MAPPER.toPatientResource(patient));
+        }
+        return result;
     }
 }

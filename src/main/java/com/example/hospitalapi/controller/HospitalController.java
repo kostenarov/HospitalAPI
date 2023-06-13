@@ -41,4 +41,13 @@ public class HospitalController {
         return ResponseEntity.ok(hospitalService.findAll());
     }
 
+    @GetMapping("/audits/{id}")
+    public ResponseEntity<?> findAllAudits(@PathVariable Long id) {
+        return ResponseEntity.ok(hospitalService.findAllAudits(id));
+    }
+
+    @GetMapping("/date")
+    public ResponseEntity<?> getUpUntilDate(@RequestParam String date) {
+        return ResponseEntity.ok(hospitalService.getUpUntilDate(date));
+    }
 }
