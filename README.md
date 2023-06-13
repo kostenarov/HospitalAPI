@@ -1,9 +1,57 @@
+HospitalAPI simulation project
+==============================
+Съдържание
+----------
+1. [Описание](#Описание)
+2. [Опицание на базата данни](#Описание-на-базата-данни)
+3. [Как се ползва](#Как-се-ползва)
+4. [Използвани технологии](#Използвани-технологии)
+
+Описание
+--------
+Проектът представлява симулация на система за управление за болници. Клиентите могат да добавят болници, стаи, легла, пациенти, лекари, операции и линейки.
+
+Описание на базата данни
+-------------------------
 ![image](https://github.com/kostenarov/HospitalAPI/assets/61360809/d1b07fe3-9e20-4c21-a19a-253914c946dc)
-Hospital REST API.
-Hospital: Has field for id, Name and City.
-Room: Has fields for id and the id of the hospital it's in.
-Bed: Has fields for id, the id of the hospital and the id of the room as well as the id of the patient that is in it.
-Ambulance: So far only id and the id of the hospital
-Abstract class Person that has the following atributes: First name, last name and age fo the person.(In the works)
-Patient: Id, age, first and last name, operation, if any, bed and the admission date
-Doctor:  Id, age, first and last name, operations(one doctor can participate in multiple operations, but only one doctor can participate in an operation) and hospital.
+Бзата данни се състои от 7 таблица:
+* Hospitals - съдържа данни за болниците
+* Rooms - съдържа данни за стаите
+* Beds - съдържа данни за леглата
+* Patients - съдържа данни за пациентите
+* Doctors - съдържа данни за лекарите
+* Operations - съдържа данни за операциите
+* Ambulances - съдържа данни за линейките
+
+Как се ползва
+-------------
+Проектът може да бъде хостван локално или на облак, като например Microsoft Azure.
+
+Локално хостване:
+
+1.Клоинване на репото
+    git clone https://github.com/kostenarov/HospitalAPI.git
+
+2.Конфигуриране на базата данни в MySQL Workbench
+
+3.Конфигуриране на файла application.properties
+
+4.Стартиране на проекта
+
+Облак:
+За да се хоства проектът на Microsoft Azure е необходимо да се изпълнят следните стъпки:
+
+1.Клоинване на репото
+git clone https://github.com/kostenarov/HospitalAPI.git
+
+2.Конфигуриране на remote database в Azure
+
+3.Създаване нов Spring Web App в Azure
+
+4.Deploy на проекта в Azure
+
+Използвани технологии
+----------------------
+Spring Boot, Spring Data JPA, MySQL, Maven, Microsoft Azure
+
+
