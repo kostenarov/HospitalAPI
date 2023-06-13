@@ -1,8 +1,10 @@
 package com.example.hospitalapi.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.envers.Audited;
 
 @MappedSuperclass
+@Audited
 public abstract class Person {
     @Id
     @GeneratedValue

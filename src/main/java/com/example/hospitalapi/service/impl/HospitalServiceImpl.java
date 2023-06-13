@@ -65,8 +65,8 @@ public class HospitalServiceImpl implements HospitalService {
         AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
         List<Number> revisions = auditReader.getRevisions(Hospital.class, id);
         List<HospitalResource> result = new ArrayList<>();
-        for(Number id1 : revisions) {
-            Hospital hospital = auditReader.find(Hospital.class, id, id1);
+        for(Number revision : revisions) {
+            Hospital hospital = auditReader.find(Hospital.class, id, revision);
             result.add(HOSPITAL_MAPPER.toHospitalResource(hospital));
         }
         return result;
@@ -79,7 +79,7 @@ public class HospitalServiceImpl implements HospitalService {
                 .forRevisionsOfEntity(Hospital.class, true, true)
                 .getResultList();
 
-        Object result = null;
+        List<HospitalResource> result = new ArrayList<>();
 
         for (Object revision : revisions) {
             if(((Hospital) revision).getCreatedDate() == null) {
@@ -88,8 +88,7 @@ public class HospitalServiceImpl implements HospitalService {
 
             if(((Hospital) revision).getCreatedDate().before(Timestamp.valueOf(date)) ||
                     ((Hospital) revision).getCreatedDate().equals(Timestamp.valueOf(date))) {
-                result = revision;
-                break;
+                result.add(HOSPITAL_MAPPER.toHospitalResource((Hospital) revision));
             }
         }
 

@@ -13,6 +13,7 @@ public class PatientResource {
     private Long bedId;
     private Long operationId;
     private Date admissionDate;
+    private Date modifiedDate;
 
     public Long getOperationId() {
         return operationId;
@@ -20,5 +21,21 @@ public class PatientResource {
 
     public Long getBedId() {
         return bedId;
+    }
+
+    public Date getAdmissionDate() {
+        return admissionDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public void setAdmissionDate(Date admissionDate) {
+        this.admissionDate = admissionDate;
     }
 }

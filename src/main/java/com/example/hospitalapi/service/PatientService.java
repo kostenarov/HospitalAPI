@@ -27,5 +27,5 @@ public interface PatientService {
 
     void addOperation(Long patientId, Operation operation);
 
-    List<PatientResource> findAllAudits(Long id);
+    Object findAllAudits(Long id);
 }

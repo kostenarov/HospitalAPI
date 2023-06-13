@@ -7,9 +7,14 @@ import com.example.hospitalapi.repository.PatientRepository;
 import com.example.hospitalapi.repository.RoomRepository;
 import com.example.hospitalapi.service.BedService;
 
+import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +26,7 @@ public class BedServiceImpl implements BedService {
     private final BedRepository bedRepository;
     private final RoomRepository roomRepository;
     private final PatientRepository patientRepository;
+    private final EntityManagerFactory entityManagerFactory;
 
     @Override
     public List<BedResource> findAll() {
@@ -43,7 +49,10 @@ public class BedServiceImpl implements BedService {
 
     @Override
     public Optional<BedResource> findById(Long id) {
-        return bedRepository.findById(id).map(BED_MAPPER::toBedResource);
+        Date date = new Date();
+        if(bedRepository.findById(id).get().getValidFrom().before(date))
+            return bedRepository.findById(id).map(BED_MAPPER::toBedResource);
+        return Optional.empty();
     }
 
     @Override
@@ -54,7 +63,14 @@ public class BedServiceImpl implements BedService {
 
     @Override
     public List<BedResource> findByRoomId(Long id) {
-        return BED_MAPPER.toBedResources(bedRepository.findByRoomId(id));
+        List<BedResource> result = new ArrayList<>();
+        List<BedResource> beds = BED_MAPPER.toBedResources(bedRepository.findByRoomId(id));
+        for(BedResource bed : beds) {
+            if(bed.getValidFrom().before(new Date())) {
+                result.add(bed);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -66,7 +82,14 @@ public class BedServiceImpl implements BedService {
 
     @Override
     public List<BedResource> findByHospitalId(Long id) {
-        return BED_MAPPER.toBedResources(bedRepository.findByRoomHospitalId(id));
+        List<BedResource> result = new ArrayList<>();
+        List<BedResource> beds = BED_MAPPER.toBedResources(bedRepository.findByRoomHospitalId(id));
+        for(BedResource bed : beds) {
+            if(bed.getValidFrom().before(new Date())) {
+                result.add(bed);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -80,5 +103,17 @@ public class BedServiceImpl implements BedService {
                         }
                 );
         return BED_MAPPER.toBedResource(bedRepository.save(bed));
+    }
+
+    @Override
+    public Object findAuditsById(Long id) {
+        AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
+        List<Number> revisions = auditReader.getRevisions(Bed.class, id);
+        List<BedResource> result = new ArrayList<>();
+        for(Number revision : revisions) {
+            Bed bed = auditReader.find(Bed.class, id, revision);
+            result.add(BED_MAPPER.toBedResource(bed));
+        }
+        return result;
     }
 }

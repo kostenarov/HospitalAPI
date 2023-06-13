@@ -36,7 +36,12 @@ public class PatientServiceImpl implements PatientService {
     public PatientResource save(PatientResource patientResource) {
         Patient patient = validatePatient(patientResource);
         patient.setOperation(null);
-        patient.setBed(patientResource.getBedId() == null ? null : bedRepository.findById(patientResource.getBedId()).get());
+
+        if(bedRepository.existsById(patientResource.getBedId())) {
+            patient.setBed(bedRepository.findById(patientResource.getBedId()).get());
+        }
+        patient.setModifiedDate(patientResource.getModifiedDate());
+        patient.setAdmissionDate(patientResource.getAdmissionDate());
         return PATIENT_MAPPER.toPatientResource(patientRepository.save(patient));
     }
 
@@ -53,7 +58,6 @@ public class PatientServiceImpl implements PatientService {
         patient.setAge(patientResource.getAge());
         patient.setFirstName(patientResource.getFirstName());
         patient.setLastName(patientResource.getLastName());
-        patient.setAdmissionDate(patientResource.getAdmissionDate());
         return patient;
     }
 
@@ -61,6 +65,8 @@ public class PatientServiceImpl implements PatientService {
     public PatientResource update(PatientResource patientResource) {
         Patient patient = validatePatient(patientResource);
         patient.setOperation(patientResource.getOperationId() == null ? null : operationRepository.findById(patientResource.getOperationId()).get());
+        patient.setModifiedDate(patientResource.getModifiedDate());
+        patient.setAdmissionDate(patientRepository.findById(patientResource.getId()).get().getAdmissionDate());
         return PATIENT_MAPPER.toPatientResource(patientRepository.save(patient));
     }
 
@@ -109,11 +115,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<PatientResource> findAllAudits(Long id) {
+    public Object findAllAudits(Long id) {
         AuditReader auditReader = AuditReaderFactory.get(entityManagerFactory.createEntityManager());
         List<Number> revisions = auditReader.getRevisions(Patient.class, id);
         List<PatientResource> result = new ArrayList<>();
-        for (Number revision : revisions) {
+        for(Number revision : revisions) {
             Patient patient = auditReader.find(Patient.class, id, revision);
             result.add(PATIENT_MAPPER.toPatientResource(patient));
         }

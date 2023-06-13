@@ -64,7 +64,7 @@ public class PatientController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/allAudits/{id}")
+    @GetMapping("/audits/{id}")
     public ResponseEntity<?> findAllAudits(@PathVariable Long id) {
         return ResponseEntity.ok(patientService.findAllAudits(id));
     }

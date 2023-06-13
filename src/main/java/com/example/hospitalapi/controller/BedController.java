@@ -55,4 +55,9 @@ public class BedController {
     public ResponseEntity<?> findByHospitalId(@PathVariable Long id) {
         return ResponseEntity.ok(bedService.findByHospitalId(id));
     }
+
+    @GetMapping("/audit/{id}")
+    public ResponseEntity<?> findAuditById(@PathVariable Long id) {
+        return ResponseEntity.ok(bedService.findAuditsById(id));
+    }
 }
