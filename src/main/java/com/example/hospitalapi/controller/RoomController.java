@@ -2,7 +2,6 @@ package com.example.hospitalapi.controller;
 
 import com.example.hospitalapi.controller.resources.RoomResource;
 import com.example.hospitalapi.repository.HospitalRepository;
-import com.example.hospitalapi.service.BedService;
 import com.example.hospitalapi.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
