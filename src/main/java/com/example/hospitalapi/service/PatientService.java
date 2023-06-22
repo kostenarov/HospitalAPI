@@ -17,8 +17,6 @@ public interface PatientService {
 
     List<PatientResource> findByHospitalId(Long id);
 
-    List<PatientResource> findByRoomId(Long id);
-
     Optional<PatientResource> findByBedId(Long id);
 
     Optional<PatientResource> findByOperationId(Long id);

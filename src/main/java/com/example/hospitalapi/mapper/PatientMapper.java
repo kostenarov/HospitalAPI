@@ -22,5 +22,5 @@ public interface PatientMapper {
 
     List<PatientResource> toPatientResources(List<Patient> all);
 
-    List<Patient> fromPatientResources(List<PatientResource> all);
+    //List<Patient> fromPatientResources(List<PatientResource> all);
 }

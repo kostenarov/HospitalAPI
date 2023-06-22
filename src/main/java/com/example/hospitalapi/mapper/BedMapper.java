@@ -23,5 +23,5 @@ public interface BedMapper {
 
     List<BedResource> toBedResources(List<Bed> bedList);
 
-    List<Bed> fromBedResources(List<BedResource> bedResourceList);
+    //List<Bed> fromBedResources(List<BedResource> bedResourceList);
 }

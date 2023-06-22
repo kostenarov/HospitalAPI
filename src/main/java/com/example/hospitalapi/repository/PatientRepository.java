@@ -8,17 +8,17 @@ import java.util.List;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
-    public boolean existsById(Long id);
+    boolean existsById(Long id);
 
-    public Patient findByBedId(Long id);
+    Patient findByBedId(Long id);
 
-    public Patient findByOperationId(Long id);
+    Patient findByOperationId(Long id);
 
-    public List<Patient> findByBedRoomHospitalId(Long id);
+    List<Patient> findByBedRoomHospitalId(Long id);
 
-    public List<Patient> findByBedRoomId(Long id);
+    List<Patient> findByBedRoomId(Long id);
 
-    public void deleteAllByBedRoomId(Long id);
+    void deleteAllByBedRoomId(Long id);
 
-    public void deleteByBedId(Long id);
+    void deleteByBedId(Long id);
 }

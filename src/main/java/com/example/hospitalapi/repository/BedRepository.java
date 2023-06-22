@@ -8,11 +8,11 @@ import java.util.List;
 
 @Repository
 public interface BedRepository extends JpaRepository<Bed, Long> {
-    public Bed findByPatientId(Long id);
+    Bed findByPatientId(Long id);
 
-    public List<Bed> findByRoomId(Long id);
+    List<Bed> findByRoomId(Long id);
 
-    public List<Bed> findByRoomHospitalId(Long id);
+    List<Bed> findByRoomHospitalId(Long id);
 
-    public void deleteAllByRoomId(Long id);
+    void deleteAllByRoomId(Long id);
 }

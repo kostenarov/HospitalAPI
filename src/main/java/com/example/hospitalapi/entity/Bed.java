@@ -19,7 +19,7 @@ public class Bed {
     @ManyToOne
     private Room room;
 
-    @OneToOne(optional = true)
+    @OneToOne
     @NotAudited
     private Patient patient;
 

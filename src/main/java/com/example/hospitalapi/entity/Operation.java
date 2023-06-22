@@ -19,7 +19,7 @@ public class Operation {
     @NotAudited
     private Hospital hospital;
 
-    @OneToOne
+    @OneToOne(optional = false)
     @NotAudited
     private Patient patient;
 

@@ -8,21 +8,17 @@ import java.util.List;
 
 @Repository
 public interface OperationRepository extends JpaRepository<Operation, Long> {
-    public boolean existsById(Long id);
+    boolean existsById(Long id);
 
-    public Operation findByPatientId(Long id);
+    Operation findByPatientId(Long id);
 
-    public List<Operation> findByDoctorId(Long id);
+    List<Operation> findByDoctorId(Long id);
 
-    public List<Operation> findByOperationDate(java.sql.Date date);
+    List<Operation> findByOperationDate(java.sql.Date date);
 
-    public List<Operation> findAllByHospitalId(Long id);
+    List<Operation> findByHospitalId(Long id);
 
-    public void deleteAllByHospitalId(Long id);
+    void deleteAllByDoctorId(Long id);
 
-    public List<Operation> findByHospitalId(Long id);
-
-    public void deleteAllByDoctorId(Long id);
-
-    public boolean existsByPatientId(Long id);
+    boolean existsByPatientId(Long id);
 }

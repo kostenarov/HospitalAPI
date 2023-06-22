@@ -8,9 +8,5 @@ import java.util.List;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    public List<Room> findByHospitalId(Long id);
-
-    public List<Room> findAllByHospitalId(Long id);
-
-    public void deleteAllByHospitalId(Long id);
+    List<Room> findByHospitalId(Long id);
 }

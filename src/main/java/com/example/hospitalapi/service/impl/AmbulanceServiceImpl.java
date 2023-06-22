@@ -28,9 +28,7 @@ public class AmbulanceServiceImpl implements AmbulanceService {
     public AmbulanceResource save(AmbulanceResource ambulanceResource) {
         Ambulance ambulance = AMBULANCE_MAPPER.fromAmbulanceResource(ambulanceResource);
         hospitalRepository.findById(ambulance.getHospital().getId())
-                .ifPresentOrElse(hospital -> {
-                    ambulance.setHospital(hospital);
-                },
+                .ifPresentOrElse(ambulance::setHospital,
                 () -> {
                     throw new RuntimeException("Hospital with id " + ambulance.getHospital().getId() + " does not exist");
                 }
@@ -49,6 +47,11 @@ public class AmbulanceServiceImpl implements AmbulanceService {
     }
 
     @Override
+    public void deleteAllByHospitalId(Long id) {
+        ambulanceRepository.deleteAllByHospitalId(id);
+    }
+
+    @Override
     public List<AmbulanceResource> findByHospitalId(Long id) {
         return AMBULANCE_MAPPER.toAmbulanceResources(ambulanceRepository.findAllByHospitalId(id));
     }
@@ -57,9 +60,7 @@ public class AmbulanceServiceImpl implements AmbulanceService {
     public AmbulanceResource update(AmbulanceResource ambulanceResource) {
         Ambulance ambulance = AMBULANCE_MAPPER.fromAmbulanceResource(ambulanceResource);
         hospitalRepository.findById(ambulance.getHospital().getId())
-                .ifPresentOrElse(hospital -> {
-                            ambulance.setHospital(hospital);
-                        },
+                .ifPresentOrElse(ambulance::setHospital,
                         () -> {
                             throw new RuntimeException("Hospital with id " + ambulance.getHospital().getId() + " does not exist");
                         }

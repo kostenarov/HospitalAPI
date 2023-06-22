@@ -50,6 +50,7 @@ public class DoctorServiceImpl implements DoctorService {
         doctorRepository.deleteById(id);
     }
 
+
     @Override
     public List<DoctorResource> findByHospitalId(Long id) {
         return DOCTOR_MAPPER.toDoctorResources(doctorRepository.findAllByHospitalId(id));

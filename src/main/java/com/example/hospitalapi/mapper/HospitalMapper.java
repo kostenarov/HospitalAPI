@@ -17,5 +17,5 @@ public interface HospitalMapper {
 
     List<HospitalResource> toHospitalResources(List<Hospital> hospital);
 
-    List<Hospital> fromHospitalResources(List<HospitalResource> hospitalResource);
+    //List<Hospital> fromHospitalResources(List<HospitalResource> hospitalResource);
 }
