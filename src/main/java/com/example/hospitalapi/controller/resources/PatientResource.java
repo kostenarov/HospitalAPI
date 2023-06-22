@@ -1,15 +1,13 @@
 package com.example.hospitalapi.controller.resources;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.sql.Date;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class PatientResource {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private int age;
+public class PatientResource extends PersonResource{
     private Long bedId;
     private Long operationId;
     private Date admissionDate;
