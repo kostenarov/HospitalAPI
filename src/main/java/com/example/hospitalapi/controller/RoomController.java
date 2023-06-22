@@ -2,7 +2,6 @@ package com.example.hospitalapi.controller;
 
 import com.example.hospitalapi.controller.resources.RoomResource;
 import com.example.hospitalapi.repository.HospitalRepository;
-import com.example.hospitalapi.service.BedService;
 import com.example.hospitalapi.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/v1/room")
+@RequestMapping("/api/v1/hospital/room")
 @RequiredArgsConstructor
 public class RoomController {
     private final RoomService roomService;
