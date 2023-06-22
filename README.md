@@ -50,6 +50,16 @@ git clone https://github.com/kostenarov/HospitalAPI.git
 
 4.Deploy на проекта в Azure
 
+Kubernetes:
+За да се хоства проектът на Kubernetes е необходимо да се изпълнят следните стъпки:
+1.Клониране на репото
+
+2.Конфигуриране на remote database в Azure
+
+3.Създаване на Dockerfile
+
+4.Създаване на Kubernetes cluster
+
 Използвани технологии
 ----------------------
 Spring Boot, Spring Data JPA, MySQL, Maven, Microsoft Azure
