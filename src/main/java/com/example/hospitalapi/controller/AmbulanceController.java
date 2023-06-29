@@ -36,7 +36,6 @@ public class AmbulanceController {
         return ResponseEntity.ok(ambulanceService.findByHospitalId(id));
     }
 
-
     @GetMapping("/all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(ambulanceService.findAll());

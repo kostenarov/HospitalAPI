@@ -1,11 +1,13 @@
 package com.example.hospitalapi.service.impl;
 
 import com.example.hospitalapi.controller.resources.PatientResource;
+import com.example.hospitalapi.controller.resources.RoomResource;
 import com.example.hospitalapi.entity.Operation;
 import com.example.hospitalapi.entity.Patient;
 import com.example.hospitalapi.repository.BedRepository;
 import com.example.hospitalapi.repository.OperationRepository;
 import com.example.hospitalapi.repository.PatientRepository;
+import com.example.hospitalapi.repository.RoomRepository;
 import com.example.hospitalapi.service.PatientService;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,8 @@ public class PatientServiceImpl implements PatientService {
     private final BedRepository bedRepository;
     private final OperationRepository operationRepository;
     private final EntityManagerFactory entityManagerFactory;
+    private final RoomRepository roomRepository;
+
 
     @Override
     public List<PatientResource> findAll() {
@@ -96,8 +100,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<PatientResource> findByRoomId(Long id) {
-        return PATIENT_MAPPER.toPatientResources(patientRepository.findByBedRoomId(id));
+    public RoomResource movePatientToBed(Long patientId, Long bedId) {
+        PatientResource patientResource = findById(patientId).get();
+        patientResource.setBedId(bedId);
+        update(patientResource);
+        return roomRepository.findByBedId(patientRepository.getById(patientId).getBed().getId());
     }
 
     @Override

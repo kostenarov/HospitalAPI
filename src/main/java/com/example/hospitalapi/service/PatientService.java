@@ -1,6 +1,7 @@
 package com.example.hospitalapi.service;
 
 import com.example.hospitalapi.controller.resources.PatientResource;
+import com.example.hospitalapi.controller.resources.RoomResource;
 import com.example.hospitalapi.entity.Operation;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface PatientService {
     void addOperation(Long patientId, Operation operation);
 
     Object findAllAudits(Long id);
+
+    RoomResource movePatientToBed(Long patientId, Long bedId);
 }
