@@ -27,6 +27,4 @@ public interface PatientService {
     void addOperation(Long patientId, Operation operation);
 
     Object findAllAudits(Long id);
-
-    RoomResource movePatientToBed(Long patientId, Long bedId);
 }

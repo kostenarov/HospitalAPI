@@ -99,13 +99,6 @@ public class PatientServiceImpl implements PatientService {
         return PATIENT_MAPPER.toPatientResources(patientRepository.findByBedRoomHospitalId(id));
     }
 
-    @Override
-    public RoomResource movePatientToBed(Long patientId, Long bedId) {
-        PatientResource patientResource = findById(patientId).get();
-        patientResource.setBedId(bedId);
-        update(patientResource);
-        return roomRepository.findByBedId(patientRepository.getById(patientId).getBed().getId());
-    }
 
     @Override
     public Optional<PatientResource> findByBedId(Long id) {
